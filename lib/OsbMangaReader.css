@@ -1,0 +1,138 @@
+[override] osb-manga-reader h1, [override] osb-manga-reader h2, [override] osb-manga-reader h3, [override] osb-manga-reader h4, [override] osb-manga-reader h5, [override] osb-manga-reader h6, [override] osb-manga-reader p, [override] osb-manga-reader div, [override] osb-manga-reader span, [override] osb-manga-reader small {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300; }
+
+[override] osb-manga-reader h1, [override] osb-manga-reader h2 {
+  margin-top: 0;
+  margin-bottom: 20px; }
+
+[override] osb-manga-reader p {
+  font-size: 12px; }
+
+[override] osb-manga-reader .fa {
+  line-height: 1.42857; }
+
+[override] osb-manga-reader .main-nav {
+  padding-left: 0;
+  padding-right: 0; }
+
+[override] osb-manga-reader .credits {
+  margin-bottom: 10px; }
+  [override] osb-manga-reader .credits small {
+    font-style: italic; }
+
+[override] osb-manga-reader .btn:focus, [override] osb-manga-reader .btn:active {
+  outline: none !important; }
+
+[override] osb-manga-reader .btn-primary {
+  background-color: #0285E3;
+  background-image: none;
+  box-shadow: 0 2px 0 0 rgba(0, 42, 71, 0.7);
+  border: 0; }
+  [override] osb-manga-reader .btn-primary:hover {
+    background-color: #0065AD; }
+  [override] osb-manga-reader .btn-primary:active, [override] osb-manga-reader .btn-primary.active {
+    background-color: #0065AD;
+    box-shadow: none;
+    margin-bottom: -2px;
+    margin-top: 2px; }
+  [override] osb-manga-reader .btn-primary:focus {
+    outline: none; }
+
+[override] osb-manga-reader .main-nav {
+  margin-top: 10px; }
+
+[override] osb-manga-reader .mangaList {
+  height: 500px;
+  min-height: 500px; }
+  [override] osb-manga-reader .mangaList .mainImage {
+    padding-left: 0;
+    padding-right: 0; }
+  [override] osb-manga-reader .mangaList .thumbGrid {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap; }
+    [override] osb-manga-reader .mangaList .thumbGrid li {
+      position: relative;
+      background: #B0B0B0;
+      box-sizing: border-box;
+      -webkit-flex: 1 1 25%;
+      flex: 1 1 25%;
+      border-right: 1px solid #000;
+      border-bottom: 1px solid #000; }
+      [override] osb-manga-reader .mangaList .thumbGrid li:nth-child(4n+4) {
+        border-right: none; }
+      @media (max-width: 990px) {
+        [override] osb-manga-reader .mangaList .thumbGrid li {
+          -webkit-flex: 1 1 33.333%;
+          flex: 1 1 33.333%; } }
+      @media (max-width: 640px) {
+        [override] osb-manga-reader .mangaList .thumbGrid li {
+          -webkit-flex: 1 1 50%;
+          flex: 1 1 50%; } }
+      [override] osb-manga-reader .mangaList .thumbGrid li nav {
+        width: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 10px;
+        position: absolute;
+        top: 0;
+        left: 0; }
+      [override] osb-manga-reader .mangaList .thumbGrid li .title {
+        width: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        color: #FFF;
+        font-size: 24px;
+        padding: 10px;
+        position: absolute;
+        bottom: 0;
+        left: 0; }
+      [override] osb-manga-reader .mangaList .thumbGrid li img {
+        width: 100%; }
+
+[override] osb-manga-reader .mangaLoader i {
+  width: 55px;
+  height: 80px;
+  font-size: 60px;
+  margin: 50px auto;
+  display: block; }
+
+[override] osb-manga-reader .mangaPage {
+  padding-left: 0;
+  padding-right: 0; }
+  [override] osb-manga-reader .mangaPage img {
+    height: 100%;
+    width: auto;
+    display: block;
+    margin: 0 auto;
+    /*@media (max-width: 700px) {
+        height: auto;
+        width: 100%;
+      }*/ }
+
+[override] osb-manga-reader .mangaTitle {
+  margin-bottom: 30px; }
+  [override] osb-manga-reader .mangaTitle h2 {
+    margin-top: 0;
+    margin-bottom: 5px; }
+  [override] osb-manga-reader .mangaTitle nav {
+    margin-bottom: 10px; }
+  [override] osb-manga-reader .mangaTitle .btn {
+    margin: 0 10px 10px 0; }
+  [override] osb-manga-reader .mangaTitle .form-inline .btn {
+    margin: 0 0 3px 10px; }
+  [override] osb-manga-reader .mangaTitle .mangaDescription {
+    padding-left: 0; }
+  [override] osb-manga-reader .mangaTitle .mangaDetails h3 {
+    margin-top: 0; }
+  [override] osb-manga-reader .mangaTitle .mainImage {
+    padding-left: 0;
+    padding-right: 0; }
+    [override] osb-manga-reader .mangaTitle .mainImage img {
+      width: 100%;
+      height: auto; }
+
+[override] osb-manga-reader .mangaViewer {
+  width: 100%; }
