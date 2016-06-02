@@ -26,6 +26,7 @@
     "es6-promise": "^3.0.2",
     "core-js": "^2.4.0",
     "reflect-metadata": "0.1.2",
-    "ts-loader": "^0.8.2"
+    "ts-loader": "^0.8.2",
+    "swiper": "3.3.1"
   }
 }

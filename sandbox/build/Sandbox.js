@@ -10,20 +10,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 const core_1 = require('@angular/core');
 const platform_browser_dynamic_1 = require('@angular/platform-browser-dynamic');
-const components_1 = require('osb-component-test/components');
+const components_1 = require('osb-manga-reader/components');
+const http_1 = require('@angular/http');
+require('Swiper');
 let Sandbox = class Sandbox {
     constructor() {
-        console.log('Loaded');
+        console.log('Sandbox Loaded');
     }
 };
 Sandbox = __decorate([
     core_1.Component({
         selector: 'sandbox',
-        directives: [components_1.OsbComponentTest],
-        template: `<osb-component-test></osb-component-test>`
+        directives: [components_1.OsbMangaReader],
+        template: `<osb-manga-reader></osb-manga-reader>`
     }), 
     __metadata('design:paramtypes', [])
 ], Sandbox);
 exports.Sandbox = Sandbox;
-platform_browser_dynamic_1.bootstrap(Sandbox);
+platform_browser_dynamic_1.bootstrap(Sandbox, http_1.HTTP_PROVIDERS);
 //# sourceMappingURL=Sandbox.js.map

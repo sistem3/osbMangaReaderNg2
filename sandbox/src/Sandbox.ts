@@ -1,6 +1,9 @@
 import {Component} from '@angular/core';
 import {bootstrap} from '@angular/platform-browser-dynamic';
 import {OsbMangaReader} from 'osb-manga-reader/components';
+import { Http, HTTP_PROVIDERS, Headers, RequestOptions } from '@angular/http';
+import 'Swiper';
+declare let Swiper;
 
 @Component({
     selector: 'sandbox',
@@ -13,4 +16,4 @@ export class Sandbox {
     }
 }
 
-bootstrap(Sandbox);
+bootstrap(Sandbox, HTTP_PROVIDERS);

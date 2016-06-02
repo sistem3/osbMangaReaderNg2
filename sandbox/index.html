@@ -13,11 +13,14 @@
     <script src="node_modules/core-js/client/shim.min.js"></script>
     <script src="node_modules/systemjs/dist/system.src.js"></script>
 
+    <script src="node_modules/swiper/dist/js/swiper.min.js"></script>
+
     <script>
         var packages = {
             'app': {main: 'main.js', defaultExtension: 'js'},
             'rxjs': {defaultExtension: 'js'},
-            'angular2-in-memory-web-api': {defaultExtension: 'js'}
+            'angular2-in-memory-web-api': {defaultExtension: 'js'},
+            'Swiper': { defaultExtension: 'js', main: 'js/swiper.min.js' }
         };
         var packageNames = [
             '@angular/common',
@@ -37,6 +40,7 @@
         var map = {
             '@angular': 'node_modules/@angular',
             'rxjs': 'node_modules/rxjs',
+            'Swiper': 'node_modules/swiper/dist/',
             'osb-manga-reader': 'node_modules/osb-manga-reader'
         };
         var config = {
