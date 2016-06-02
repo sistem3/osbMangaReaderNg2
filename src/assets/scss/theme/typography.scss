@@ -1,0 +1,32 @@
+osb-manga-reader, .osb-manga-reader-holder {
+  h1, h2, h3, h4, h5, h6, p, div, span, small {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+  }
+
+  h1, h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
+
+  p {
+    font-size: 12px;
+  }
+
+  .fa {
+    line-height: 1.42857;
+  }
+
+  .main-nav {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .credits {
+    margin-bottom: 10px;
+
+    small {
+      font-style: italic;
+    }
+  }
+}

@@ -1,0 +1,69 @@
+osb-manga-reader, .osb-manga-reader-holder {
+  .mangaList {
+    height: 500px;
+    min-height: 500px;
+
+    .mainImage {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .thumbGrid {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: row;
+      flex-direction: row;
+
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+
+      li {
+        position: relative;
+        background: $silver-chalice;
+        box-sizing: border-box;
+        -webkit-flex: 1 1 25%;
+        flex: 1 1 25%;
+        border-right: 1px solid $color-black;
+        border-bottom: 1px solid $color-black;
+
+        &:nth-child(4n+4) {
+          border-right: none;
+        }
+
+        @media (max-width: $breakpoint-medium) {
+          -webkit-flex: 1 1 33.333%;
+          flex: 1 1 33.333%;
+        }
+
+        @media (max-width: $breakpoint-x-small) {
+          -webkit-flex: 1 1 50%;
+          flex: 1 1 50%;
+        }
+
+        nav {
+          width: 100%;
+          background: rgba($color-black, 0.5);
+          padding: 10px;
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+
+        .title {
+          width: 100%;
+          background: rgba($color-black, 0.5);
+          color: $color-white;
+          font-size: 24px;
+          padding: 10px;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+        }
+
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

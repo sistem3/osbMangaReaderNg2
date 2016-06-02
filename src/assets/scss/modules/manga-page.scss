@@ -1,0 +1,18 @@
+osb-manga-reader, .osb-manga-reader-holder {
+  .mangaPage {
+    padding-left: 0;
+    padding-right: 0;
+
+    img {
+      height: 100%;
+      width: auto;
+      display: block;
+      margin: 0 auto;
+
+      /*@media (max-width: 700px) {
+        height: auto;
+        width: 100%;
+      }*/
+    }
+  }
+}

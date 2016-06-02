@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Osb Manga Reader - Sandbox</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="node_modules/osb-manga-reader/lib/OsbMangaReader.css">
+
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="node_modules/core-js/client/shim.min.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+
+    <script>
+        var packages = {
+            'app': {main: 'main.js', defaultExtension: 'js'},
+            'rxjs': {defaultExtension: 'js'},
+            'angular2-in-memory-web-api': {defaultExtension: 'js'}
+        };
+        var packageNames = [
+            '@angular/common',
+            '@angular/compiler',
+            '@angular/core',
+            '@angular/http',
+            '@angular/platform-browser',
+            '@angular/platform-browser-dynamic',
+            '@angular/router',
+            '@angular/router-deprecated',
+            '@angular/testing',
+            '@angular/upgrade'
+        ];
+        packageNames.forEach(function (pkgName){
+            packages[pkgName] = {main: 'index.js', defaultExtension: 'js'};
+        });
+        var map = {
+            '@angular': 'node_modules/@angular',
+            'rxjs': 'node_modules/rxjs',
+            'osb-manga-reader': 'node_modules/osb-manga-reader'
+        };
+        var config = {
+            defaultJSExtensions: true,
+            map: map,
+            packages: packages
+        };
+        System.config(config);
+    </script>
+
+    <script src="node_modules/rxjs/bundles/Rx.umd.js"></script>
+    <script src="node_modules/@angular/core/core.umd.js"></script>
+    <script src="node_modules/@angular/common/common.umd.js"></script>
+    <script src="node_modules/@angular/compiler/compiler.umd.js"></script>
+    <script src="node_modules/@angular/platform-browser/platform-browser.umd.js"></script>
+    <script src="node_modules/@angular/platform-browser-dynamic/platform-browser-dynamic.umd.js"></script>
+
+    <script>
+        System.import('build/Sandbox').catch(console.log.bind(console));
+    </script>
+</head>
+<body override>
+    <sandbox></sandbox>
+</body>
+</html>

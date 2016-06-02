@@ -1,0 +1,28 @@
+$button-drop-size:  2px;
+osb-manga-reader, .osb-manga-reader-holder {
+  .btn:focus,.btn:active {
+    outline: none !important;
+  }
+
+  .btn-primary {
+    background-color: $azure-radiance;
+    background-image: none;
+    box-shadow: 0 $button-drop-size 0 0 rgba($prussian-blue, 0.7);
+    border: 0;
+
+    &:hover {
+      background-color: $endeavour;
+    }
+
+    &:active, &.active {
+      background-color: $endeavour;
+      box-shadow: none;
+      margin-bottom: -$button-drop-size;
+      margin-top: $button-drop-size;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
