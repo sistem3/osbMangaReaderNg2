@@ -1,5 +1,5 @@
 $button-drop-size:  2px;
-osb-manga-reader, .osb-manga-reader-holder {
+[override] osb-manga-reader {
   .btn:focus,.btn:active {
     outline: none !important;
   }
