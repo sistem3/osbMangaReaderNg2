@@ -4,11 +4,11 @@ import 'Swiper';
 declare let Swiper;
 
 @Component({
-    selector: 'osb-component-test',
-    templateUrl: 'node_modules/osb-component-test/lib/OsbComponentTest.html',
-    styleUrls: ['node_modules/osb-component-test/lib/OsbComponentTest.css']
+    selector: 'osb-manga-reader',
+    templateUrl: 'node_modules/osb-manga-reader/lib/OsbMangaReader.html',
+    styleUrls: ['node_modules/osb-manga-reader/lib/OsbMangaReader.css']
 })
-export class OsbComponentTest {
+export class OsbMangaReader {
     isLoading = true;
     section = '';
     baseUrl = '';
