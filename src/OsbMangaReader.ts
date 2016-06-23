@@ -5,8 +5,8 @@ declare let Swiper;
 
 @Component({
     selector: 'osb-manga-reader',
-    templateUrl: 'vendor/osb-manga-reader/lib/OsbMangaReader.html',
-    styleUrls: ['vendor/osb-manga-reader/lib/OsbMangaReader.css']
+    templateUrl: 'node_modules/osb-manga-reader/lib/OsbMangaReader.html',
+    styleUrls: ['node_modules/osb-manga-reader/lib/OsbMangaReader.css']
 })
 export class OsbMangaReader {
     isLoading = true;
@@ -29,16 +29,24 @@ export class OsbMangaReader {
     mainListViewDisplayCount = 0;
 
     sliderSettings = {};
+    viewerSettings = {
+        whichManga: {},
+        chapter: 1,
+        chaptersTotal: 0,
+        hasBookmarks: false
+    };
+    userSettings = {};
 
     constructor(public http: Http) {
+        // Initial Settings
         this.isLoading = true;
         this.listStyle = false;
         this.section = 'site-favourites';
-
+        // API Settings
         this.baseUrl = 'https://doodle-manga-scraper.p.mashape.com/';
         this.apiKey = 'xiQSdA9ACbmshUxnm4ZBC8nn2umSp1LeqQfjsnnVeMWHHSIQy0';
         this.defaultSite = 'mangareader.net';
-
+        // App Favourites Settings
         this.siteFavouritesUrl = 'http://private-e00abd-osbmangareader.apiary-mock.com/topfeed';
         this.siteFavouritesData = [];
         this.siteFavouritesDisplay = [];
@@ -50,15 +58,35 @@ export class OsbMangaReader {
         this.mainListViewData = [];
         this.mainListViewDisplay = [];
         this.mainListViewDisplayCount = 0;
-
+        // Swiper Settings
         this.sliderSettings = {
-            'slidesPerView': 1,
-            'keyboardControl': true,
-            'preloadImages': false,
-            'lazyLoading': true
+            slidesPerView: 1,
+            keyboardControl: true,
+            preloadImages: false,
+            lazyLoading: true,
+            onInit: this.sliderOnInit,
+            onSlideChangeEnd: this.slideChanged,
+            onReachEnd: this.chapterFinish
+        };
+        // User Settings
+        this.userSettings = {
+            bookmarks: [],
+            favourites: []
         };
         console.log(this);
         this.checkCache();
+    }
+
+    sliderOnInit(swiper) {
+        document.getElementById('pagesTotal').innerHTML = swiper.slides.length;
+    }
+
+    slideChanged(swiper) {
+        document.getElementById('pageNumber').innerHTML = swiper.activeIndex + 1;
+    }
+
+    chapterFinish(swiper) {
+        console.log('Reached the end');
     }
 
     checkCache() {
@@ -89,9 +117,10 @@ export class OsbMangaReader {
     }
 
     getMangaChapter(manga, chapter) {
+        this.viewerSettings.chaptersTotal = manga.chapters.length;
         let headers = new Headers({ 'X-Mashape-Authorization': this.apiKey });
         let options = new RequestOptions({ headers: headers });
-        this.http.get(this.baseUrl + this.defaultSite  + '/manga/' + manga + '/' + chapter, options)
+        this.http.get(this.baseUrl + this.defaultSite  + '/manga/' + manga.href + '/' + chapter, options)
             .subscribe(response => this.setMangaChapter(response));
     }
 

@@ -15,6 +15,9 @@
                     <li>
                         <button class="btn btn-primary" (click)="hideMenu = !hideMenu"><i class="fa fa-chevron-left" [ngClass]="{'fa-chevron-left': !hideMenu, 'fa-chevron-right': hideMenu}"></i></button>
                     </li>
+                    <li *ngIf="!isLoading && section === 'manga-chapter'" class="pull-right">
+                        <strong>Chapter</strong>: <span id="chapterNumber">1</span>/{{viewerSettings.chaptersTotal}} <strong>Page</strong>: <span id="pageNumber">1</span>/<span id="pagesTotal"></span> <button class="btn btn-primary"><i class="fa fa-bookmark-o"></i></button>
+                    </li>
                 </ul>
             </nav>
         </div>
@@ -31,7 +34,7 @@
                         <nav>
                             <button class="btn btn-primary" (click)="viewMangaDetails(manga)"><i class="fa fa-info-circle"></i> Manga Info</button>
                             <button class="btn btn-primary"><i class="fa fa-heart-o"></i> Add to favourites</button>
-                            <button class="btn btn-primary" (click)="getMangaChapter(manga.href, 1)"><i class="fa fa-book"></i> Start Reading</button>
+                            <button class="btn btn-primary" (click)="getMangaChapter(manga, 1)"><i class="fa fa-book"></i> Start Reading</button>
                         </nav>
                     </div>
                 </article>
@@ -42,7 +45,7 @@
                 <nav>
                     <button class="btn btn-primary" (click)="viewMangaDetails(manga)"><i class="fa fa-info-circle"></i></button>
                     <button class="btn btn-primary"><i class="fa fa-heart-o"></i></button>
-                    <button class="btn btn-primary" (click)="getMangaChapter(manga.href, 1)"><i class="fa fa-book"></i></button>
+                    <button class="btn btn-primary" (click)="getMangaChapter(manga, 1)"><i class="fa fa-book"></i></button>
                 </nav>
                 <img src="{{ manga.cover }}" alt="{{ manga.name }}" title="{{ manga.name }}" />
                 <div class="title">{{ manga.name }}</div>
@@ -81,10 +84,10 @@
     </section>
     <section *ngIf="!isLoading && section === 'manga-info'" class="mangaTitle container-fluid">
         <article class="row">
-            <div class="col-md-3 mainImage">
+            <div class="col-md-3 col-sm-3 col-xs-12 mainImage">
                 <img src="{{ mangaInfo.cover }}" class="img-responsive center-block" />
             </div>
-            <div class="col-md-9">
+            <div class="col-md-9 col-sm-9 col-xs-12">
                 <h2 [innerHTML]="mangaInfo.name"></h2>
                 <nav class="form-inline">
                     <label for="chapterSelect">Chapter: </label>
