@@ -33,6 +33,8 @@ export class OsbMangaReader {
         whichManga: {},
         chapter: 1,
         chaptersTotal: 0,
+        chapterPagesTotal: 0,
+        isPage: 1,
         hasBookmarks: false
     };
     userSettings = {};
@@ -64,9 +66,9 @@ export class OsbMangaReader {
             keyboardControl: true,
             preloadImages: false,
             lazyLoading: true,
-            onInit: this.sliderOnInit,
-            onSlideChangeEnd: this.slideChanged,
-            onReachEnd: this.chapterFinish
+            onInit: this.sliderOnInit.bind(this),
+            onSlideChangeEnd: this.slideChanged.bind(this),
+            onReachEnd: this.chapterFinish.bind(this)
         };
         // User Settings
         this.userSettings = {
@@ -78,15 +80,16 @@ export class OsbMangaReader {
     }
 
     sliderOnInit(swiper) {
-        document.getElementById('pagesTotal').innerHTML = swiper.slides.length;
+        this.viewerSettings.chapterPagesTotal = swiper.slides.length;
     }
 
     slideChanged(swiper) {
-        document.getElementById('pageNumber').innerHTML = swiper.activeIndex + 1;
+        this.viewerSettings.isPage = swiper.activeIndex + 1;
     }
 
     chapterFinish(swiper) {
-        console.log('Reached the end');
+        var nextChapter = this.viewerSettings.chapter + 1;
+        this.getMangaChapter(this.viewerSettings.whichManga, nextChapter);
     }
 
     checkCache() {
@@ -117,6 +120,9 @@ export class OsbMangaReader {
     }
 
     getMangaChapter(manga, chapter) {
+        this.viewerSettings.isPage = 1;
+        this.viewerSettings.chapter = chapter;
+        this.viewerSettings.whichManga = manga;
         this.viewerSettings.chaptersTotal = manga.chapters.length;
         let headers = new Headers({ 'X-Mashape-Authorization': this.apiKey });
         let options = new RequestOptions({ headers: headers });
