@@ -120,7 +120,7 @@ export class OsbMangaReader {
     }
 
     getMangaChapter(manga, chapter) {
-        this.viewerSettings.isPage = 1;
+        this.isLoading = true;
         this.viewerSettings.chapter = chapter;
         this.viewerSettings.whichManga = manga;
         this.viewerSettings.chaptersTotal = manga.chapters.length;
@@ -131,6 +131,7 @@ export class OsbMangaReader {
     }
 
     setMangaChapter(chapter) {
+        this.viewerSettings.isPage = 1;
         this.mangaChapter = chapter.json();
         this.section = 'manga-chapter';
         this.isLoading = false;
