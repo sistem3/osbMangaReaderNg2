@@ -30,11 +30,31 @@
         @media (max-width: $breakpoint-medium) {
           -webkit-flex: 1 1 33.333%;
           flex: 1 1 33.333%;
+
+          &:nth-child(4n+4) {
+            border-right: 1px solid $color-black;
+          }
+
+          &:nth-child(3n+3) {
+            border-right: none;
+          }
         }
 
         @media (max-width: $breakpoint-x-small) {
           -webkit-flex: 1 1 50%;
           flex: 1 1 50%;
+
+          &:nth-child(4n+4) {
+            border-right: 1px solid $color-black;
+          }
+
+          &:nth-child(3n+3) {
+            border-right: 1px solid $color-black;
+          }
+
+          &:nth-child(2n+2) {
+            border-right: none;
+          }
         }
 
         nav {
