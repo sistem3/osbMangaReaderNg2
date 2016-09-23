@@ -1,5 +1,9 @@
 [override] osb-manga-reader {
   .main-nav {
     margin-top: 10px;
+
+    li:first-child button {
+      margin-left: 10px;
+    }
   }
 }

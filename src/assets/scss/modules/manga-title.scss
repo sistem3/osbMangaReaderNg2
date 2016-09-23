@@ -1,6 +1,8 @@
 [override] osb-manga-reader {
   .mangaTitle {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid $silver-chalice;
 
     h2 {
       margin-top: 0;
