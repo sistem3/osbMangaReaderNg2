@@ -1,0 +1,8 @@
+{
+  "name": "OSB Manga Reader",
+  "short_name": "osbMangaReader",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#fff",
+  "description": "Angular 2 Manga Reader Application"
+}
