@@ -34,9 +34,15 @@
                         <p [innerHTML]="manga.info"></p><small>
                         <strong>Status:</strong> {{ manga.status }}</small>
                         <nav>
-                            <button class="btn btn-primary" (click)="viewMangaDetails(manga)"><i class="fa fa-info-circle"></i> Manga Info</button>
-                            <button class="btn btn-primary" (click)="setFavourite(manga)"><i class="fa fa-heart-o"></i> Add to favourites</button>
-                            <button class="btn btn-primary" (click)="getMangaChapter(manga, 1)"><i class="fa fa-book"></i> Start Reading</button>
+                            <button class="btn btn-primary" (click)="viewMangaDetails(manga)">
+                                <i class="fa fa-info-circle"></i> Manga Info
+                            </button>
+                            <button class="btn btn-primary" (click)="setFavourite(manga)">
+                                <i class="fa" [ngClass]="{'fa-heart': !checkFavourite(manga.href), 'fa-heart-o': checkFavourite(manga.href)}"></i> Add to favourites
+                            </button>
+                            <button class="btn btn-primary" (click)="getMangaChapter(manga, 1)">
+                                <i class="fa fa-book"></i> Start Reading
+                            </button>
                         </nav>
                     </div>
                 </article>
@@ -45,9 +51,15 @@
         <ul *ngIf="!listStyle" class="list-unstyled thumbGrid">
             <li *ngFor="let manga of siteFavouritesDisplay">
                 <nav>
-                    <button class="btn btn-primary" (click)="viewMangaDetails(manga)"><i class="fa fa-info-circle"></i></button>
-                    <button class="btn btn-primary" (click)="setFavourite(manga)"><i class="fa fa-heart-o"></i></button>
-                    <button class="btn btn-primary" (click)="getMangaChapter(manga, 1)"><i class="fa fa-book"></i></button>
+                    <button class="btn btn-primary" (click)="viewMangaDetails(manga)">
+                        <i class="fa fa-info-circle"></i>
+                    </button>
+                    <button class="btn btn-primary" (click)="setFavourite(manga)">
+                        <i class="fa" [ngClass]="{'fa-heart': !checkFavourite(manga.href), 'fa-heart-o': checkFavourite(manga.href)}"></i>
+                    </button>
+                    <button class="btn btn-primary" (click)="getMangaChapter(manga, 1)">
+                        <i class="fa fa-book"></i>
+                    </button>
                 </nav>
                 <img src="{{ manga.cover }}" alt="{{ manga.name }}" title="{{ manga.name }}" />
                 <div class="title">{{ manga.name }}</div>

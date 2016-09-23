@@ -152,9 +152,18 @@ export class OsbMangaReader {
         }
     }
 
+    checkFavourite(manga) {
+        return (this.userSettings.favourites.indexOf(manga) == -1);
+    }
+
     setFavourite(manga) {
-        if (this.userSettings.favourites.indexOf(manga) == -1) {
-            this.userSettings.favourites.push(manga);
+        if (this.userSettings.favourites.length < 1) {
+            this.userSettings.favourites.push(manga.href);
+            localStorage.setItem('osbMangaReader.user', JSON.stringify(this.userSettings));
+        }
+
+        if (this.checkFavourite(manga.href)) {
+            this.userSettings.favourites.push(manga.href);
             localStorage.setItem('osbMangaReader.user', JSON.stringify(this.userSettings));
         }
     }
