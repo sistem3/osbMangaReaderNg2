@@ -217,10 +217,12 @@ export class OsbMangaReader {
         if (this.userSettings.bookmarks.length < 1) {
             this.userSettings.bookmarks.push(bookmark);
             localStorage.setItem('osbMangaReader.user', JSON.stringify(this.userSettings));
+            this.viewerSettings.isBookmark = this.checkBookmark(bookmark);
         } else {
             if (!this.checkBookmark(bookmark)) {
                 this.userSettings.bookmarks.push(bookmark);
                 localStorage.setItem('osbMangaReader.user', JSON.stringify(this.userSettings));
+                this.viewerSettings.isBookmark = this.checkBookmark(bookmark);
             }
         }
     }
