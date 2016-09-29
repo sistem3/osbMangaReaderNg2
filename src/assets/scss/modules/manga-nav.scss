@@ -1,4 +1,14 @@
 [override] osb-manga-reader {
+  .nav-holder {
+    width: 100%;
+    background: rgba($color-white, 0.5);
+    border-bottom: 1px solid $color-black;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+  }
+
   .main-nav {
     margin-top: 10px;
 

@@ -131,7 +131,7 @@ export class OsbMangaReader {
     initSlider() {
         var holder = this;
         setTimeout(function(){
-            var viewportSize = window.innerHeight - 90;
+            var viewportSize = window.innerHeight - 20;
             document.querySelector('.osb-manga-reader-holder .swiper-container').setAttribute('style','height:' + viewportSize + 'px;');
             mangaView = new Swiper(document.querySelector('.osb-manga-reader-holder .swiper-container'), holder.sliderSettings);
         }, 500);
