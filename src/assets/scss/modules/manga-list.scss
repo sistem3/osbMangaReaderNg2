@@ -3,6 +3,7 @@
     .mainImage {
       padding-left: 0;
       padding-right: 0;
+      text-indent: -10000px;
     }
 
     .thumbGrid {
@@ -79,8 +80,13 @@
 
         img {
           width: 100%;
+          text-indent: -10000px;
         }
       }
     }
+  }
+
+  .status {
+    text-transform: capitalize;
   }
 }
