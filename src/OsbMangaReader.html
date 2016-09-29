@@ -18,13 +18,13 @@
                     <li *ngIf="!isLoading && section === 'manga-chapter'" class="pull-right">
                         <strong>Chapter</strong>: {{viewerSettings.chapter}}/{{viewerSettings.chaptersTotal}}
                         <strong>Page</strong>: {{viewerSettings.isPage}}/{{viewerSettings.chapterPagesTotal}}
-                        <button class="btn btn-primary">
+                        <button class="btn btn-primary" (click)="goToBookmark(viewerSettings.prevBookmark)" *ngIf="viewerSettings.hasBookmarks && viewerSettings.hasPrevBookmark">
                             <i class="fa fa-chevron-left"></i>
                         </button>
                         <button class="btn btn-primary" (click)="setBookmark(viewerSettings.whichManga, viewerSettings.chapter, viewerSettings.isPage)">
-                            <i class="fa fa-bookmark-o"></i>
+                            <i class="fa" [ngClass]="{'fa-bookmark-o': !viewerSettings.isBookmark, 'fa-bookmark': viewerSettings.isBookmark}"></i>
                         </button>
-                        <button class="btn btn-primary">
+                        <button class="btn btn-primary" (click)="goToBookmark(viewerSettings.nextBookmark)" *ngIf="viewerSettings.hasBookmarks && viewerSettings.hasNextBookmark">
                             <i class="fa fa-chevron-right"></i>
                         </button>
                     </li>
