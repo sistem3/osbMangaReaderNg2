@@ -50,6 +50,7 @@ export class OsbMangaReader {
         prevBookmark: {}
     };
     userSettings = {
+        nightMode: false,
         bookmarks: [],
         favourites: []
     };
@@ -124,6 +125,9 @@ export class OsbMangaReader {
         var userSettings = localStorage.getItem('osbMangaReader.user');
         if (userSettings) {
             this.userSettings = JSON.parse(userSettings);
+            if (this.userSettings.nightMode) {
+                this.setNightMode(true);
+            }
         }
         this.getSiteFavourites();
     }
@@ -135,6 +139,20 @@ export class OsbMangaReader {
             document.querySelector('.osb-manga-reader-holder .swiper-container').setAttribute('style','height:' + viewportSize + 'px;');
             mangaView = new Swiper(document.querySelector('.osb-manga-reader-holder .swiper-container'), holder.sliderSettings);
         }, 500);
+    }
+
+    setNightMode(isNight) {
+        if (isNight) {
+            document.body.classList.add('night-time');
+        } else {
+            document.body.classList.remove('night-time');
+        }
+    }
+
+    toggleNightMode() {
+        this.userSettings.nightMode = !this.userSettings.nightMode;
+        this.setNightMode(this.userSettings.nightMode);
+        localStorage.setItem('osbMangaReader.user', JSON.stringify(this.userSettings));
     }
 
     hasMoreBookmarks(pageObj) {

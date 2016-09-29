@@ -1,0 +1,24 @@
+[override].night-time {
+  background: $color-black;
+
+  osb-manga-reader {
+    .nav-holder {
+      background: rgba($color-black, 0.5);
+      border-bottom: 1px solid $mine-shaft;
+    }
+
+    .mangaTitle {
+      border-bottom: 1px solid $mine-shaft;
+
+      h2, h3, p, small, span, label {
+        color: $color-white;
+      }
+    }
+    
+    .mangaLoader {
+      i {
+        color: $color-white;
+      }
+    }
+  }
+}

@@ -4,10 +4,13 @@
             <nav class="col-md-12 main-nav">
                 <ul class="list-unstyled list-inline">
                     <li *ngIf="!hideMenu">
-                        <button class="btn btn-primary" (click)="getSiteFavourites()"><i class="fa fa-diamond"></i> Site Favourites</button>
+                        <button class="btn btn-primary" (click)="getSiteFavourites()"><i class="fa fa-diamond"></i> Recommended</button>
                     </li>
                     <li *ngIf="!hideMenu">
                         <button class="btn btn-primary" (click)="getMainMangaList()"><i class="fa fa-list"></i> All Titles</button>
+                    </li>
+                    <li *ngIf="!hideMenu">
+                        <button class="btn btn-primary" (click)="toggleNightMode()"><i class="fa fa-moon-o"></i></button>
                     </li>
                     <li *ngIf="!hideMenu && section === 'site-favourites' || section === 'main-view'">
                         <button class="btn btn-primary" (click)="listStyle = !listStyle"><i class="fa" [ngClass]="{'fa-list-ul': !listStyle, 'fa-th': listStyle}"></i></button>
@@ -16,24 +19,28 @@
                         <button class="btn btn-primary" (click)="hideMenu = !hideMenu"><i class="fa fa-chevron-left" [ngClass]="{'fa-chevron-left': !hideMenu, 'fa-chevron-right': hideMenu}"></i></button>
                     </li>
                     <li *ngIf="!isLoading && section === 'manga-chapter'" class="pull-right">
-                        <strong>Chapter</strong>: {{viewerSettings.chapter}}/{{viewerSettings.chaptersTotal}}
-                        <strong>Page</strong>: {{viewerSettings.isPage}}/{{viewerSettings.chapterPagesTotal}}
-                        <button class="btn btn-primary" (click)="goToBookmark(viewerSettings.prevBookmark)" *ngIf="viewerSettings.hasBookmarks && viewerSettings.hasPrevBookmark">
-                            <i class="fa fa-chevron-left"></i>
-                        </button>
-                        <button class="btn btn-primary" (click)="setBookmark(viewerSettings.whichManga, viewerSettings.chapter, viewerSettings.isPage)">
-                            <i class="fa" [ngClass]="{'fa-bookmark-o': !viewerSettings.isBookmark, 'fa-bookmark': viewerSettings.isBookmark}"></i>
-                        </button>
-                        <button class="btn btn-primary" (click)="goToBookmark(viewerSettings.nextBookmark)" *ngIf="viewerSettings.hasBookmarks && viewerSettings.hasNextBookmark">
-                            <i class="fa fa-chevron-right"></i>
-                        </button>
+                        <div class="chapterDetails">
+                            <strong>Chapter</strong>: {{viewerSettings.chapter}}/{{viewerSettings.chaptersTotal}}
+                            <strong>Page</strong>: {{viewerSettings.isPage}}/{{viewerSettings.chapterPagesTotal}}
+                        </div>
+                        <div class="bookmark-nav-holder">
+                            <button class="btn btn-primary" (click)="goToBookmark(viewerSettings.prevBookmark)" *ngIf="viewerSettings.hasBookmarks && viewerSettings.hasPrevBookmark">
+                                <i class="fa fa-chevron-left"></i>
+                            </button>
+                            <button class="btn btn-primary" (click)="setBookmark(viewerSettings.whichManga, viewerSettings.chapter, viewerSettings.isPage)">
+                                <i class="fa" [ngClass]="{'fa-bookmark-o': !viewerSettings.isBookmark, 'fa-bookmark': viewerSettings.isBookmark}"></i>
+                            </button>
+                            <button class="btn btn-primary" (click)="goToBookmark(viewerSettings.nextBookmark)" *ngIf="viewerSettings.hasBookmarks && viewerSettings.hasNextBookmark">
+                                <i class="fa fa-chevron-right"></i>
+                            </button>
+                        </div>
                     </li>
                 </ul>
             </nav>
         </div>
     </section>
     <section *ngIf="!isLoading && section === 'site-favourites'" class="mangaList">
-        <ul *ngIf="listStyle" class="list-unstyled">
+        <ul *ngIf="listStyle" class="list-unstyled listGrid">
             <li *ngFor="let manga of siteFavouritesDisplay" class="mangaTitle">
                 <article class="container-fluid">
                     <div class="col-md-2 col-sm-4 col-xs-12 mainImage"><img src="{{ manga.cover }}" alt="{{ manga.name }}" title="{{ manga.name }}" class="img-responsive center-block" /></div>
@@ -75,7 +82,7 @@
         </ul>
     </section>
     <section *ngIf="!isLoading && section === 'main-view'" class="mangaList">
-        <ul *ngIf="listStyle" class="list-unstyled">
+        <ul *ngIf="listStyle" class="list-unstyled listGrid">
             <li *ngFor="let manga of mainListViewDisplay" class="mangaTitle">
                 <article class="container-fluid">
                     <div class="col-md-2 col-sm-4 col-xs-12 mainImage"><img src="{{ manga.cover }}" alt="{{ manga.name }}" title="{{ manga.name }}" class="img-responsive center-block" /></div>
@@ -122,7 +129,7 @@
             </li>
         </ul>
     </section>
-    <section *ngIf="!isLoading && section === 'manga-info'" class="mangaTitle container-fluid">
+    <section *ngIf="!isLoading && section === 'manga-info'" class="mangaTitle mangaDetails container-fluid">
         <article class="row">
             <div class="col-md-3 col-sm-3 col-xs-12 mainImage">
                 <img src="{{ mangaInfo.cover }}" class="img-responsive center-block" />

@@ -16,4 +16,15 @@
       margin-left: 10px;
     }
   }
+
+  .bookmark-nav-holder {
+    min-width: 120px;
+    display: inline-block;
+    text-align: center;
+  }
+
+  .chapterDetails {
+    display: inline-block;
+    color: $color-white;
+  }
 }
