@@ -1,5 +1,5 @@
 <main class="osb-manga-reader-holder">
-    <section class="container-fluid">
+    <section class="container-fluid nav-holder">
         <div class="row">
             <nav class="col-md-12 main-nav">
                 <ul class="list-unstyled list-inline">
@@ -15,23 +15,42 @@
                     <li>
                         <button class="btn btn-primary" (click)="hideMenu = !hideMenu"><i class="fa fa-chevron-left" [ngClass]="{'fa-chevron-left': !hideMenu, 'fa-chevron-right': hideMenu}"></i></button>
                     </li>
+                    <li *ngIf="!isLoading && section === 'manga-chapter'" class="pull-right">
+                        <strong>Chapter</strong>: {{viewerSettings.chapter}}/{{viewerSettings.chaptersTotal}}
+                        <strong>Page</strong>: {{viewerSettings.isPage}}/{{viewerSettings.chapterPagesTotal}}
+                        <button class="btn btn-primary" (click)="goToBookmark(viewerSettings.prevBookmark)" *ngIf="viewerSettings.hasBookmarks && viewerSettings.hasPrevBookmark">
+                            <i class="fa fa-chevron-left"></i>
+                        </button>
+                        <button class="btn btn-primary" (click)="setBookmark(viewerSettings.whichManga, viewerSettings.chapter, viewerSettings.isPage)">
+                            <i class="fa" [ngClass]="{'fa-bookmark-o': !viewerSettings.isBookmark, 'fa-bookmark': viewerSettings.isBookmark}"></i>
+                        </button>
+                        <button class="btn btn-primary" (click)="goToBookmark(viewerSettings.nextBookmark)" *ngIf="viewerSettings.hasBookmarks && viewerSettings.hasNextBookmark">
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
+                    </li>
                 </ul>
             </nav>
         </div>
     </section>
     <section *ngIf="!isLoading && section === 'site-favourites'" class="mangaList">
         <ul *ngIf="listStyle" class="list-unstyled">
-            <li *ngFor="let manga of siteFavouritesDisplay" class="row mangaTitle">
+            <li *ngFor="let manga of siteFavouritesDisplay" class="mangaTitle">
                 <article class="container-fluid">
                     <div class="col-md-2 col-sm-4 col-xs-12 mainImage"><img src="{{ manga.cover }}" alt="{{ manga.name }}" title="{{ manga.name }}" class="img-responsive center-block" /></div>
                     <div class="col-md-10 col-sm-8 col-xs-12">
                         <h2>{{ manga.name }}</h2>
-                        <p [innerHTML]="manga.info"></p><small>
-                        <strong>Status:</strong> {{ manga.status }}</small>
+                        <p [innerHTML]="manga.info"></p>
+                        <small class="status"><strong>Status:</strong> {{ manga.status }}</small>
                         <nav>
-                            <button class="btn btn-primary" (click)="viewMangaDetails(manga)"><i class="fa fa-info-circle"></i> Manga Info</button>
-                            <button class="btn btn-primary"><i class="fa fa-heart-o"></i> Add to favourites</button>
-                            <button class="btn btn-primary" (click)="getMangaChapter(manga.href, 1)"><i class="fa fa-book"></i> Start Reading</button>
+                            <button class="btn btn-primary" (click)="viewMangaDetails(manga)">
+                                <i class="fa fa-info-circle"></i> Manga Info
+                            </button>
+                            <button class="btn btn-primary" (click)="setFavourite(manga)">
+                                <i class="fa" [ngClass]="{'fa-heart': !checkFavourite(manga.href), 'fa-heart-o': checkFavourite(manga.href)}"></i> Add to favourites
+                            </button>
+                            <button class="btn btn-primary" (click)="getMangaChapter(manga, 1)">
+                                <i class="fa fa-book"></i> Start Reading
+                            </button>
                         </nav>
                     </div>
                 </article>
@@ -40,9 +59,15 @@
         <ul *ngIf="!listStyle" class="list-unstyled thumbGrid">
             <li *ngFor="let manga of siteFavouritesDisplay">
                 <nav>
-                    <button class="btn btn-primary" (click)="viewMangaDetails(manga)"><i class="fa fa-info-circle"></i></button>
-                    <button class="btn btn-primary"><i class="fa fa-heart-o"></i></button>
-                    <button class="btn btn-primary" (click)="getMangaChapter(manga.href, 1)"><i class="fa fa-book"></i></button>
+                    <button class="btn btn-primary" (click)="viewMangaDetails(manga)">
+                        <i class="fa fa-info-circle"></i>
+                    </button>
+                    <button class="btn btn-primary" (click)="setFavourite(manga)">
+                        <i class="fa" [ngClass]="{'fa-heart': !checkFavourite(manga.href), 'fa-heart-o': checkFavourite(manga.href)}"></i>
+                    </button>
+                    <button class="btn btn-primary" (click)="getMangaChapter(manga, 1)">
+                        <i class="fa fa-book"></i>
+                    </button>
                 </nav>
                 <img src="{{ manga.cover }}" alt="{{ manga.name }}" title="{{ manga.name }}" />
                 <div class="title">{{ manga.name }}</div>
@@ -51,64 +76,85 @@
     </section>
     <section *ngIf="!isLoading && section === 'main-view'" class="mangaList">
         <ul *ngIf="listStyle" class="list-unstyled">
-            <li *ngFor="let manga of mainListViewDisplay" class="row mangaTitle">
+            <li *ngFor="let manga of mainListViewDisplay" class="mangaTitle">
                 <article class="container-fluid">
                     <div class="col-md-2 col-sm-4 col-xs-12 mainImage"><img src="{{ manga.cover }}" alt="{{ manga.name }}" title="{{ manga.name }}" class="img-responsive center-block" /></div>
                     <div class="col-md-10 col-sm-8 col-xs-12">
                         <h2>{{ manga.name }}</h2>
-                        <p [innerHTML]="manga.info"></p><small>
-                        <strong>Status:</strong> {{ manga.status }}</small>
+                        <p [innerHTML]="manga.info"></p>
+                        <small class="status"><strong>Status:</strong> {{ manga.status }}</small>
                         <nav>
-                            <button class="btn btn-primary" (click)="viewMangaDetails(manga)"><i class="fa fa-info-circle"></i> Manga Info</button>
-                            <button class="btn btn-primary"><i class="fa fa-heart-o"></i> Add to favourites</button>
-                            <button class="btn btn-primary" (click)="getMangaChapter(manga.href, 1)"><i class="fa fa-book"></i> Start Reading</button>
+                            <button class="btn btn-primary" (click)="viewMangaDetails(manga)">
+                                <i class="fa fa-info-circle"></i> Manga Info
+                            </button>
+                            <button class="btn btn-primary" (click)="setFavourite(manga)">
+                                <i class="fa" [ngClass]="{'fa-heart': !checkFavourite(manga.href), 'fa-heart-o': checkFavourite(manga.href)}"></i> Add to favourites
+                            </button>
+                            <button class="btn btn-primary" (click)="getMangaChapter(manga.href, 1)">
+                                <i class="fa fa-book"></i> Start Reading
+                            </button>
                         </nav>
                     </div>
                 </article>
+            </li>
+            <li id="paginationLoaderList">
+                <i class="fa fa-spinner fa-spin"></i>
             </li>
         </ul>
         <ul *ngIf="!listStyle" class="list-unstyled thumbGrid">
             <li *ngFor="let manga of mainListViewDisplay">
                 <nav>
-                    <button class="btn btn-primary" (click)="viewMangaDetails(manga)"><i class="fa fa-info-circle"></i></button>
-                    <button class="btn btn-primary"><i class="fa fa-heart-o"></i></button>
-                    <button class="btn btn-primary" (click)="getMangaChapter(manga.href, 1)"><i class="fa fa-book"></i></button>
+                    <button class="btn btn-primary" (click)="viewMangaDetails(manga)">
+                        <i class="fa fa-info-circle"></i>
+                    </button>
+                    <button class="btn btn-primary" (click)="setFavourite(manga)">
+                        <i class="fa" [ngClass]="{'fa-heart': !checkFavourite(manga.href), 'fa-heart-o': checkFavourite(manga.href)}"></i>
+                    </button>
+                    <button class="btn btn-primary" (click)="getMangaChapter(manga.href, 1)">
+                        <i class="fa fa-book"></i>
+                    </button>
                 </nav>
                 <img src="{{ manga.cover }}" alt="{{ manga.name }}" title="{{ manga.name }}" />
                 <div class="title">{{ manga.name }}</div>
+            </li>
+            <li id="paginationLoader">
+                <i class="fa fa-spinner fa-spin"></i>
             </li>
         </ul>
     </section>
     <section *ngIf="!isLoading && section === 'manga-info'" class="mangaTitle container-fluid">
         <article class="row">
-            <div class="col-md-3 mainImage">
+            <div class="col-md-3 col-sm-3 col-xs-12 mainImage">
                 <img src="{{ mangaInfo.cover }}" class="img-responsive center-block" />
             </div>
-            <div class="col-md-9">
+            <div class="col-md-9 col-sm-9 col-xs-12">
                 <h2 [innerHTML]="mangaInfo.name"></h2>
                 <nav class="form-inline">
                     <label for="chapterSelect">Chapter: </label>
-                    <select id="chapterSelect" class="form-control">
-                        <option *ngFor="let chapter of mangaInfo.chapters" [value]="chapter.name">{{ chapter.name }}</option>
+                    <select id="chapterSelect" class="form-control" [(ngModel)]="mangaInfo.chapterSelect">
+                        <option *ngFor="let chapter of mangaInfo.chapters" [value]="chapter.chapterId">{{ chapter.chapterId }} | {{ chapter.name }}</option>
                     </select>
-                    <button class="btn btn-primary"><i class="fa fa-chevron-right"></i></button>
+                    <button class="btn btn-primary" (click)="getMangaChapter(mangaInfo, mangaInfo.chapterSelect)"><i class="fa fa-chevron-right"></i></button>
                 </nav>
-                <div class="col-md-8 mangaDescription">
+                <div class="col-md-8 col-sm-8 mangaDescription">
                     <p [innerHTML]="mangaInfo.info"></p>
                     <h3>Genres:</h3>
                     <ul class="list-unstyled list-inline">
                         <li *ngFor="let genre of mangaInfo.genres"><button class="btn btn-primary">{{ genre }}</button></li>
                     </ul>
                 </div>
-                <div class="col-md-4 mangaDetails">
+                <div class="col-md-4 col-sm-4 mangaDetails">
                     <h3>
-                        <strong>Status:</strong> <span [innerHTML]="mangaInfo.status"></span>
+                        <strong>Status:</strong> <span class="status" [innerHTML]="mangaInfo.status"></span>
                     </h3>
-                    <p *ngIf="mangaInfo.lastUpdate">
-                        <strong>Last Updated:</strong> <span [innerHTML]="mangaInfo.lastUpdate"></span>
-                    </p>
                     <p *ngIf="mangaInfo.yearOfRelease">
                         <strong>Date Released:</strong> <span [innerHTML]="mangaInfo.yearOfRelease"></span>
+                    </p>
+                    <p *ngIf="mangaInfo.author.length > 0">
+                        <strong>Author:</strong> <span *ngFor="let author of mangaInfo.author">{{ author }}</span>
+                    </p>
+                    <p *ngIf="mangaInfo.artist.length > 0">
+                        <strong>Artist:</strong> <span *ngFor="let artist of mangaInfo.artist">{{ artist }}</span>
                     </p>
                 </div>
             </div>
