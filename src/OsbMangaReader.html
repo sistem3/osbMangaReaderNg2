@@ -39,8 +39,8 @@
                     <div class="col-md-2 col-sm-4 col-xs-12 mainImage"><img src="{{ manga.cover }}" alt="{{ manga.name }}" title="{{ manga.name }}" class="img-responsive center-block" /></div>
                     <div class="col-md-10 col-sm-8 col-xs-12">
                         <h2>{{ manga.name }}</h2>
-                        <p [innerHTML]="manga.info"></p><small>
-                        <strong>Status:</strong> {{ manga.status }}</small>
+                        <p [innerHTML]="manga.info"></p>
+                        <small class="status"><strong>Status:</strong> {{ manga.status }}</small>
                         <nav>
                             <button class="btn btn-primary" (click)="viewMangaDetails(manga)">
                                 <i class="fa fa-info-circle"></i> Manga Info
@@ -81,8 +81,8 @@
                     <div class="col-md-2 col-sm-4 col-xs-12 mainImage"><img src="{{ manga.cover }}" alt="{{ manga.name }}" title="{{ manga.name }}" class="img-responsive center-block" /></div>
                     <div class="col-md-10 col-sm-8 col-xs-12">
                         <h2>{{ manga.name }}</h2>
-                        <p [innerHTML]="manga.info"></p><small>
-                        <strong>Status:</strong> {{ manga.status }}</small>
+                        <p [innerHTML]="manga.info"></p>
+                        <small class="status"><strong>Status:</strong> {{ manga.status }}</small>
                         <nav>
                             <button class="btn btn-primary" (click)="viewMangaDetails(manga)">
                                 <i class="fa fa-info-circle"></i> Manga Info
@@ -96,6 +96,9 @@
                         </nav>
                     </div>
                 </article>
+            </li>
+            <li id="paginationLoaderList">
+                <i class="fa fa-spinner fa-spin"></i>
             </li>
         </ul>
         <ul *ngIf="!listStyle" class="list-unstyled thumbGrid">
@@ -113,6 +116,9 @@
                 </nav>
                 <img src="{{ manga.cover }}" alt="{{ manga.name }}" title="{{ manga.name }}" />
                 <div class="title">{{ manga.name }}</div>
+            </li>
+            <li id="paginationLoader">
+                <i class="fa fa-spinner fa-spin"></i>
             </li>
         </ul>
     </section>
@@ -139,7 +145,7 @@
                 </div>
                 <div class="col-md-4 mangaDetails">
                     <h3>
-                        <strong>Status:</strong> <span [innerHTML]="mangaInfo.status"></span>
+                        <strong class="status">Status:</strong> <span [innerHTML]="mangaInfo.status"></span>
                     </h3>
                     <p *ngIf="mangaInfo.lastUpdate">
                         <strong>Last Updated:</strong> <span [innerHTML]="mangaInfo.lastUpdate"></span>

@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="node_modules/osb-manga-reader/lib/OsbMangaReader.css">
     <link rel="stylesheet" href="node_modules/swiper/dist/css/swiper.min.css">
 
+    <script src="node_modules/scrollmagic/scrollmagic/minified/ScrollMagic.min.js"></script>
+
     <script src="node_modules/zone.js/dist/zone.js"></script>
     <script src="node_modules/reflect-metadata/Reflect.js"></script>
     <script src="node_modules/core-js/client/shim.min.js"></script>
@@ -20,7 +22,8 @@
             'app': {main: 'main.js', defaultExtension: 'js'},
             'rxjs': {defaultExtension: 'js'},
             'angular2-in-memory-web-api': {defaultExtension: 'js'},
-            'Swiper': { defaultExtension: 'js', main: 'js/swiper.min.js' }
+            'Swiper': { defaultExtension: 'js', main: 'js/swiper.min.js' },
+            'ScrollMagic': { defaultExtension: 'js', main: 'ScrollMagic.min.js' }
         };
         var packageNames = [
             '@angular/common',
@@ -41,6 +44,7 @@
             '@angular': 'node_modules/@angular',
             'rxjs': 'node_modules/rxjs',
             'Swiper': 'node_modules/swiper/dist/',
+            'ScrollMagic': 'node_modules/scrollmagic/scrollmagic/minified/',
             'osb-manga-reader': 'node_modules/osb-manga-reader'
         };
         var config = {

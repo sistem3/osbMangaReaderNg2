@@ -1,8 +1,11 @@
 import {Component} from '@angular/core';
 import { Http, HTTP_PROVIDERS, Headers, RequestOptions } from '@angular/http';
 import 'Swiper';
+import 'ScrollMagic';
+declare let ScrollMagic;
 declare let Swiper;
 let mangaView;
+let pageScene, pageController;
 
 @Component({
     selector: 'osb-manga-reader',
@@ -10,11 +13,11 @@ let mangaView;
     styleUrls: ['node_modules/osb-manga-reader/lib/OsbMangaReader.css']
 })
 export class OsbMangaReader {
-    isLoading = true;
     section = '';
     baseUrl = '';
     defaultSite = '';
     apiKey = '';
+    isLoading = true;
     listStyle = false;
 
     mangaDetails = [];
@@ -28,6 +31,8 @@ export class OsbMangaReader {
     mainListViewData = [];
     mainListViewDisplay = [];
     mainListViewDisplayCount = 0;
+    mainListViewDisplayPage = 1;
+    mainListViewDisplayPageLength = 20;
 
     sliderSettings = {};
     viewerSettings = {
@@ -51,8 +56,6 @@ export class OsbMangaReader {
 
     constructor(public http: Http) {
         // Initial Settings
-        this.isLoading = true;
-        this.listStyle = false;
         this.section = 'site-favourites';
         // API Settings
         this.baseUrl = 'https://doodle-manga-scraper.p.mashape.com/';
@@ -60,16 +63,6 @@ export class OsbMangaReader {
         this.defaultSite = 'mangareader.net';
         // App Favourites Settings
         this.siteFavouritesUrl = 'http://private-e00abd-osbmangareader.apiary-mock.com/topfeed';
-        this.siteFavouritesData = [];
-        this.siteFavouritesDisplay = [];
-
-        this.mangaDetails = [];
-        this.mangaInfo = {};
-        this.mangaChapter = {};
-
-        this.mainListViewData = [];
-        this.mainListViewDisplay = [];
-        this.mainListViewDisplayCount = 0;
         // Swiper Settings
         this.sliderSettings = {
             slidesPerView: 1,
@@ -271,6 +264,9 @@ export class OsbMangaReader {
             var mainViewData = this.mainListViewData.slice(0, 20);
             mainViewData.forEach(function(element) {
                 holder.getMangaDetails(element, 'main-view', false);
+                setTimeout(function () {
+                    holder.startPagination();
+                }, 2000);
             });
             return false;
         }
@@ -294,6 +290,51 @@ export class OsbMangaReader {
         mainViewData.forEach(function(element) {
             holder.getMangaDetails(element, 'main-view', false);
         });
+
+        setTimeout(function () {
+            holder.startPagination();
+        }, 2000);
+    }
+
+    getMoreMainManga() {
+        var holder = this;
+        var current = holder.mainListViewDisplayPage;
+        holder.mainListViewDisplayPage++;
+        var mainViewData = this.mainListViewData.slice((holder.mainListViewDisplayPageLength * current), (holder.mainListViewDisplayPageLength * holder.mainListViewDisplayPage));
+        mainViewData.forEach(function(element) {
+            holder.getMangaDetails(element, 'main-view', false);
+        });
+
+        setTimeout(function () {
+            var paginationType;
+            if (holder.listStyle) {
+                paginationType = '#paginationLoaderList';
+            } else {
+                paginationType = '#paginationLoader';
+            }
+            document.querySelector(paginationType).classList.remove('active');
+        }, 2000);
+    }
+
+    startPagination() {
+        var holder = this, paginationType = '';
+        pageController = new ScrollMagic.Controller();
+        if (holder.listStyle) {
+            paginationType = '#paginationLoaderList';
+        } else {
+            paginationType = '#paginationLoader';
+        }
+        pageScene = new ScrollMagic.Scene({triggerElement: paginationType, triggerHook: 'onEnter'})
+            .addTo(pageController)
+            .on('enter', function (e) {
+                if (holder.section == 'main-view') {
+                    if (document.querySelector(paginationType).className.indexOf('active') == -1) {
+                        document.querySelector(paginationType).classList.add('active');
+                        holder.getMoreMainManga();
+                    }
+                }
+            });
+        pageScene.update();
     }
 
     getMangaDetails(manga, section, cache) {
