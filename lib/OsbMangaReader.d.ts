@@ -1,6 +1,7 @@
 import { Http } from '@angular/http';
 import 'Swiper';
 import 'ScrollMagic';
+import 'Drift';
 export declare class OsbMangaReader {
     http: Http;
     section: string;
@@ -9,6 +10,7 @@ export declare class OsbMangaReader {
     apiKey: string;
     isLoading: boolean;
     listStyle: boolean;
+    hideMenu: boolean;
     mangaDetails: any[];
     mangaInfo: {};
     mangaChapter: {};
@@ -34,17 +36,24 @@ export declare class OsbMangaReader {
         hasPrevBookmark: boolean;
         nextBookmark: {};
         prevBookmark: {};
+        usingMagnifier: boolean;
     };
     userSettings: {
+        nightMode: boolean;
         bookmarks: any[];
         favourites: any[];
     };
     constructor(http: Http);
+    destroyEvents(): void;
     sliderOnInit(swiper: any): void;
+    slideChangeStarting(swiper: any): void;
     slideChanged(swiper: any): void;
     chapterFinish(swiper: any): void;
     checkCache(): void;
     initSlider(): void;
+    setNightMode(isNight: any): void;
+    toggleNightMode(): void;
+    showMagnifier(): void;
     hasMoreBookmarks(pageObj: any): boolean;
     hasLessBookmarks(pageObj: any): boolean;
     goToBookmark(bookmark: any): void;
