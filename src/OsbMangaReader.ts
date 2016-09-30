@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import { Http, HTTP_PROVIDERS, Headers, RequestOptions } from '@angular/http';
 import 'Swiper';
 import 'ScrollMagic';
@@ -13,7 +13,7 @@ let mangaView, pageScene, pageController, driftInstance;
     templateUrl: 'node_modules/osb-manga-reader/lib/OsbMangaReader.html',
     styleUrls: ['node_modules/osb-manga-reader/lib/OsbMangaReader.css']
 })
-export class OsbMangaReader {
+export class OsbMangaReader implements OnDestroy {
     section = '';
     baseUrl = '';
     defaultSite = '';
@@ -85,6 +85,10 @@ export class OsbMangaReader {
         window.onbeforeunload = function(e) {
             holder.destroyEvents();
         };
+    }
+
+    ngOnDestroy() {
+        this.destroyEvents();
     }
 
     destroyEvents() {
