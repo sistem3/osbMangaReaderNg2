@@ -80,6 +80,29 @@ export class OsbMangaReader {
         };
         console.log(this);
         this.checkCache();
+
+        var holder = this;
+        window.onbeforeunload = function(e) {
+            holder.destroyEvents();
+        };
+    }
+
+    destroyEvents() {
+        if (mangaView) {
+            mangaView.destroy();
+        }
+
+        if (pageScene) {
+            pageScene.destroy();
+        }
+
+        if (pageController) {
+            pageController.destroy();
+        }
+
+        if (driftInstance) {
+            driftInstance.destroy();
+        }
     }
 
     sliderOnInit(swiper) {
