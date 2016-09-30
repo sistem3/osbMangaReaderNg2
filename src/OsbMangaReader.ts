@@ -94,9 +94,7 @@ export class OsbMangaReader {
     }
 
     slideChangeStarting(swiper) {
-        console.log('Starting');
         if (driftInstance) {
-            console.log('destroying');
             driftInstance.destroy();
         }
     }
@@ -171,10 +169,7 @@ export class OsbMangaReader {
     }
 
     showMagnifier() {
-        console.log('Start the loupe');
-        // Fixxxxx
         this.viewerSettings.usingMagnifier = !this.viewerSettings.usingMagnifier;
-        console.log(this.viewerSettings.usingMagnifier);
         if (this.viewerSettings.usingMagnifier) {
             driftInstance = new Drift(document.querySelector('.swiper-slide-active img'), {
                 paneContainer: document.querySelector('#imageMagnifier')
