@@ -1,4 +1,8 @@
 [override] osb-manga-reader {
+  .osb-manga-reader-holder {
+    position: relative;
+  }
+
   .mangaPage {
     padding-left: 0;
     padding-right: 0;
