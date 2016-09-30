@@ -1,8 +1,9 @@
+import { OnDestroy } from '@angular/core';
 import { Http } from '@angular/http';
 import 'Swiper';
 import 'ScrollMagic';
 import 'Drift';
-export declare class OsbMangaReader {
+export declare class OsbMangaReader implements OnDestroy {
     http: Http;
     section: string;
     baseUrl: string;
@@ -44,6 +45,7 @@ export declare class OsbMangaReader {
         favourites: any[];
     };
     constructor(http: Http);
+    ngOnDestroy(): void;
     destroyEvents(): void;
     sliderOnInit(swiper: any): void;
     slideChangeStarting(swiper: any): void;
