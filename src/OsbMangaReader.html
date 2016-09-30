@@ -4,13 +4,15 @@
             <nav class="col-md-12 main-nav">
                 <ul class="list-unstyled list-inline">
                     <li *ngIf="!hideMenu">
-                        <button class="btn btn-primary" (click)="getSiteFavourites()"><i class="fa fa-diamond"></i> Recommended</button>
+                        <button class="btn btn-primary" title="Recommended" (click)="getSiteFavourites()"><i class="fa fa-diamond"></i> <span class="hidden-xs">Recommended</span></button>
                     </li>
                     <li *ngIf="!hideMenu">
-                        <button class="btn btn-primary" (click)="getMainMangaList()"><i class="fa fa-list"></i> All Titles</button>
+                        <button class="btn btn-primary" title="All Titles" (click)="getMainMangaList()"><i class="fa fa-list"></i> <span class="hidden-xs">All Titles</span></button>
                     </li>
                     <li *ngIf="!hideMenu">
-                        <button class="btn btn-primary" (click)="toggleNightMode()"><i class="fa fa-moon-o"></i></button>
+                        <button class="btn btn-primary" title="Night Mode" (click)="toggleNightMode()">
+                            <i class="fa fa-moon-o"></i>
+                        </button>
                     </li>
                     <li *ngIf="!hideMenu && section === 'site-favourites' || section === 'main-view'">
                         <button class="btn btn-primary" (click)="listStyle = !listStyle"><i class="fa" [ngClass]="{'fa-list-ul': !listStyle, 'fa-th': listStyle}"></i></button>
@@ -24,16 +26,19 @@
                             <strong>Page</strong>: {{viewerSettings.isPage}}/{{viewerSettings.chapterPagesTotal}}
                         </div>
                         <div class="bookmark-nav-holder">
-                            <button class="btn btn-primary" (click)="goToBookmark(viewerSettings.prevBookmark)" *ngIf="viewerSettings.hasBookmarks && viewerSettings.hasPrevBookmark">
+                            <button class="btn btn-primary" title="Previous Bookmark" (click)="goToBookmark(viewerSettings.prevBookmark)" *ngIf="viewerSettings.hasBookmarks && viewerSettings.hasPrevBookmark">
                                 <i class="fa fa-chevron-left"></i>
                             </button>
-                            <button class="btn btn-primary" (click)="setBookmark(viewerSettings.whichManga, viewerSettings.chapter, viewerSettings.isPage)">
+                            <button class="btn btn-primary" title="Set Bookmark" (click)="setBookmark(viewerSettings.whichManga, viewerSettings.chapter, viewerSettings.isPage)">
                                 <i class="fa" [ngClass]="{'fa-bookmark-o': !viewerSettings.isBookmark, 'fa-bookmark': viewerSettings.isBookmark}"></i>
                             </button>
-                            <button class="btn btn-primary" (click)="goToBookmark(viewerSettings.nextBookmark)" *ngIf="viewerSettings.hasBookmarks && viewerSettings.hasNextBookmark">
+                            <button class="btn btn-primary" title="Next Bookmark" (click)="goToBookmark(viewerSettings.nextBookmark)" *ngIf="viewerSettings.hasBookmarks && viewerSettings.hasNextBookmark">
                                 <i class="fa fa-chevron-right"></i>
                             </button>
                         </div>
+                        <button class="btn btn-primary" title="Show Magnifier" (click)="showMagnifier()">
+                            <i class="fa" [ngClass]="{'fa-eye': viewerSettings.usingMagnifier, 'fa-eye-slash': !viewerSettings.usingMagnifier}"></i>
+                        </button>
                     </li>
                 </ul>
             </nav>
@@ -170,9 +175,10 @@
     <section *ngIf="!isLoading && section === 'manga-chapter'" class="mangaViewer swiper-container">
         <div class="swiper-wrapper">
             <div *ngFor="let page of mangaChapter.pages" class="swiper-slide mangaPage">
-                <img src="{{ page.url }}" />
+                <img src="{{ page.url }}" class="manga-page-iamge" [attr.data-zoom]="page.url" />
             </div>
         </div>
+        <div id="imageMagnifier"></div>
     </section>
     <section *ngIf="isLoading" class="mangaLoader">
         <i class="fa fa-spinner fa-spin"></i>

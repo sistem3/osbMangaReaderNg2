@@ -9,8 +9,10 @@
 
     <link rel="stylesheet" href="node_modules/osb-manga-reader/lib/OsbMangaReader.css">
     <link rel="stylesheet" href="node_modules/swiper/dist/css/swiper.min.css">
+    <link rel="stylesheet" href="node_modules/drift-zoom/dist/drift-basic.min.css">
 
     <script src="node_modules/scrollmagic/scrollmagic/minified/ScrollMagic.min.js"></script>
+    <script src="node_modules/drift-zoom/dist/Drift.min.js"></script>
 
     <script src="node_modules/zone.js/dist/zone.js"></script>
     <script src="node_modules/reflect-metadata/Reflect.js"></script>
@@ -23,7 +25,8 @@
             'rxjs': {defaultExtension: 'js'},
             'angular2-in-memory-web-api': {defaultExtension: 'js'},
             'Swiper': { defaultExtension: 'js', main: 'js/swiper.min.js' },
-            'ScrollMagic': { defaultExtension: 'js', main: 'ScrollMagic.min.js' }
+            'ScrollMagic': { defaultExtension: 'js', main: 'ScrollMagic.min.js' },
+            'Drift': { defaultExtension: 'js', main: 'Drift.min.js' }
         };
         var packageNames = [
             '@angular/common',
@@ -45,6 +48,7 @@
             'rxjs': 'node_modules/rxjs',
             'Swiper': 'node_modules/swiper/dist/',
             'ScrollMagic': 'node_modules/scrollmagic/scrollmagic/minified/',
+            'Drift': 'node_modules/drift-zoom/dist/',
             'osb-manga-reader': 'node_modules/osb-manga-reader'
         };
         var config = {

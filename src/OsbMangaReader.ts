@@ -2,10 +2,11 @@ import {Component} from '@angular/core';
 import { Http, HTTP_PROVIDERS, Headers, RequestOptions } from '@angular/http';
 import 'Swiper';
 import 'ScrollMagic';
+import 'Drift';
 declare let ScrollMagic;
 declare let Swiper;
-let mangaView;
-let pageScene, pageController;
+declare let Drift;
+let mangaView, pageScene, pageController, driftInstance;
 
 @Component({
     selector: 'osb-manga-reader',
@@ -19,6 +20,7 @@ export class OsbMangaReader {
     apiKey = '';
     isLoading = true;
     listStyle = false;
+    hideMenu = false;
 
     mangaDetails = [];
     mangaInfo = {};
@@ -47,7 +49,8 @@ export class OsbMangaReader {
         hasNextBookmark: false,
         hasPrevBookmark: false,
         nextBookmark: {},
-        prevBookmark: {}
+        prevBookmark: {},
+        usingMagnifier: false
     };
     userSettings = {
         nightMode: false,
@@ -71,6 +74,7 @@ export class OsbMangaReader {
             preloadImages: false,
             lazyLoading: true,
             onInit: this.sliderOnInit.bind(this),
+            onSlideChangeStart: this.slideChangeStarting.bind(this),
             onSlideChangeEnd: this.slideChanged.bind(this),
             onReachEnd: this.chapterFinish.bind(this)
         };
@@ -89,6 +93,14 @@ export class OsbMangaReader {
         this.viewerSettings.hasPrevBookmark = this.hasLessBookmarks(pageObj);
     }
 
+    slideChangeStarting(swiper) {
+        console.log('Starting');
+        if (driftInstance) {
+            console.log('destroying');
+            driftInstance.destroy();
+        }
+    }
+
     slideChanged(swiper) {
         this.viewerSettings.isPage = swiper.activeIndex + 1;
         var pageObj = {
@@ -99,6 +111,9 @@ export class OsbMangaReader {
         this.viewerSettings.isBookmark = this.checkBookmark(pageObj);
         this.viewerSettings.hasNextBookmark = this.hasMoreBookmarks(pageObj);
         this.viewerSettings.hasPrevBookmark = this.hasLessBookmarks(pageObj);
+        if (this.viewerSettings.usingMagnifier) {
+            this.showMagnifier();
+        }
     }
 
     chapterFinish(swiper) {
@@ -153,6 +168,20 @@ export class OsbMangaReader {
         this.userSettings.nightMode = !this.userSettings.nightMode;
         this.setNightMode(this.userSettings.nightMode);
         localStorage.setItem('osbMangaReader.user', JSON.stringify(this.userSettings));
+    }
+
+    showMagnifier() {
+        console.log('Start the loupe');
+        // Fixxxxx
+        this.viewerSettings.usingMagnifier = !this.viewerSettings.usingMagnifier;
+        console.log(this.viewerSettings.usingMagnifier);
+        if (this.viewerSettings.usingMagnifier) {
+            driftInstance = new Drift(document.querySelector('.swiper-slide-active img'), {
+                paneContainer: document.querySelector('#imageMagnifier')
+            });
+        } else if (driftInstance) {
+            driftInstance.destroy();
+        }
     }
 
     hasMoreBookmarks(pageObj) {
@@ -267,6 +296,7 @@ export class OsbMangaReader {
     }
 
     setMangaChapter(chapter) {
+        this.hideMenu = true;
         this.viewerSettings.isPage = 1;
         this.viewerSettings.isBookmark = false;
         this.viewerSettings.hasBookmarks = this.hasBookmarks(this.viewerSettings.mangaTitle);

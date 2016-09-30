@@ -20,11 +20,16 @@
   .bookmark-nav-holder {
     min-width: 120px;
     display: inline-block;
-    text-align: center;
+    text-align: right;
+
+    .fa-bookmark {
+      -webkit-text-fill-color: $color-white;
+      -webkit-text-stroke-width: 2px;
+      -webkit-text-stroke-color: $milano-red;
+    }
   }
 
   .chapterDetails {
     display: inline-block;
-    color: $color-white;
   }
 }

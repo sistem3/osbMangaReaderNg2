@@ -1,0 +1,19 @@
+[override] osb-manga-reader {
+  #imageMagnifier {
+    width: 250px;
+    height: 250px;
+    margin-top: -125px;
+    position: fixed;
+    top: 50%;
+    right: 90px;
+    z-index: 999;
+
+    .drift-zoom-pane {
+      box-shadow: 0 0 10px 3px rgba($color-black, 0.5);
+      overflow: hidden;
+      -webkit-border-radius: 15%;
+      -moz-border-radius: 15%;
+      border-radius: 15%;
+    }
+  }
+}
