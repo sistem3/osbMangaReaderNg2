@@ -101,14 +101,7 @@ export class OsbMangaReader implements OnDestroy {
     }
 
     destroyEvents() {
-        if (this.viewerSettings.isReading) {
-            this.viewerSettings.wasReading = {
-                manga: this.viewerSettings.whichManga,
-                chapter: this.viewerSettings.chapter,
-                page: this.viewerSettings.isPage
-            };
-            localStorage.setItem('osbMangaReader.wasReading', JSON.stringify(this.viewerSettings.wasReading));
-        }
+        this.setIsReading();
 
         if (mangaView != null) {
             mangaView.destroy();
@@ -138,6 +131,17 @@ export class OsbMangaReader implements OnDestroy {
         this.viewerSettings.hasPrevBookmark = this.hasLessBookmarks(pageObj);
     }
 
+    setIsReading() {
+        if (this.viewerSettings.isReading) {
+            this.viewerSettings.wasReading = {
+                manga: this.viewerSettings.whichManga,
+                chapter: this.viewerSettings.chapter,
+                page: this.viewerSettings.isPage
+            };
+            localStorage.setItem('osbMangaReader.wasReading', JSON.stringify(this.viewerSettings.wasReading));
+        }
+    }
+
     slideChangeStarting(swiper) {
         if (driftInstance) {
             driftInstance.destroy();
@@ -154,6 +158,7 @@ export class OsbMangaReader implements OnDestroy {
         this.viewerSettings.isBookmark = this.checkBookmark(pageObj);
         this.viewerSettings.hasNextBookmark = this.hasMoreBookmarks(pageObj);
         this.viewerSettings.hasPrevBookmark = this.hasLessBookmarks(pageObj);
+        this.setIsReading();
         if (this.viewerSettings.usingMagnifier) {
             this.showMagnifier();
         }
