@@ -54,6 +54,8 @@ export class OsbMangaReader implements OnDestroy {
         prevBookmark: {},
         usingMagnifier: false,
         isReading: false,
+        prevChapterShow: false,
+        nextChapterShow: false,
         wasReading: {
             manga: {},
             chapter: 0,
@@ -84,8 +86,7 @@ export class OsbMangaReader implements OnDestroy {
             lazyLoading: true,
             onInit: this.sliderOnInit.bind(this),
             onSlideChangeStart: this.slideChangeStarting.bind(this),
-            onSlideChangeEnd: this.slideChanged.bind(this),
-            onReachEnd: this.chapterFinish.bind(this)
+            onSlideChangeEnd: this.slideChanged.bind(this)
         };
         console.log(this);
         this.checkCache();
@@ -127,6 +128,7 @@ export class OsbMangaReader implements OnDestroy {
             page: this.viewerSettings.isPage
         };
         this.viewerSettings.chapterPagesTotal = swiper.slides.length;
+        this.viewerSettings.prevChapterShow = (swiper.activeIndex == 0 && this.viewerSettings.chapter > 1);
         this.viewerSettings.hasNextBookmark = this.hasMoreBookmarks(pageObj);
         this.viewerSettings.hasPrevBookmark = this.hasLessBookmarks(pageObj);
     }
@@ -159,14 +161,11 @@ export class OsbMangaReader implements OnDestroy {
         this.viewerSettings.hasNextBookmark = this.hasMoreBookmarks(pageObj);
         this.viewerSettings.hasPrevBookmark = this.hasLessBookmarks(pageObj);
         this.setIsReading();
+        this.viewerSettings.prevChapterShow = (swiper.activeIndex == 0 && this.viewerSettings.chapter > 1);
+        this.viewerSettings.nextChapterShow = (swiper.activeIndex + 1 == swiper.slides.length);
         if (this.viewerSettings.usingMagnifier) {
             this.showMagnifier();
         }
-    }
-
-    chapterFinish(swiper) {
-        var nextChapter = this.viewerSettings.chapter + 1;
-        this.getMangaChapter(this.viewerSettings.whichManga, nextChapter, false);
     }
 
     checkCache() {
@@ -349,6 +348,7 @@ export class OsbMangaReader implements OnDestroy {
         this.viewerSettings.whichManga = manga;
         this.viewerSettings.mangaTitle = manga.href;
         this.viewerSettings.chaptersTotal = manga.chapters.length;
+        this.viewerSettings.nextChapterShow = false;
         if (page) {
             hasPage = page;
         }

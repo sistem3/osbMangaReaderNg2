@@ -22,7 +22,7 @@
                     </li>
                     <li *ngIf="!isLoading && section === 'manga-chapter'" class="pull-right">
                         <div class="chapterDetails">
-                            <strong>C<span class="hidden-xs">hapter</span></strong>: {{viewerSettings.chapter}}/{{viewerSettings.chaptersTotal}}
+                            <strong>C<span class="hidden-xs">hapter</span></strong>: {{viewerSettings.chapter}}/{{viewerSettings.chaptersTotal}} 
                             <strong>P<span class="hidden-xs">age</span></strong>: {{viewerSettings.isPage}}/{{viewerSettings.chapterPagesTotal}}
                         </div>
                         <div class="bookmark-nav-holder">
@@ -38,6 +38,14 @@
                         </div>
                         <button class="btn btn-primary" title="Show Magnifier" (click)="showMagnifier()">
                             <i class="fa" [ngClass]="{'fa-eye': viewerSettings.usingMagnifier, 'fa-eye-slash': !viewerSettings.usingMagnifier}"></i>
+                        </button>
+                        <button *ngIf="viewerSettings.prevChapterShow" (click)="getMangaChapter(viewerSettings.whichManga, viewerSettings.chapter - 1, false)" class="chapterOverlay chapterPrev">
+                            <i class="fa fa-chevron-left"></i>
+                            <span>Prev Chapter</span>
+                        </button>
+                        <button *ngIf="viewerSettings.nextChapterShow" (click)="getMangaChapter(viewerSettings.whichManga, viewerSettings.chapter + 1, false)" class="chapterOverlay chapterNext">
+                            <span>Next Chapter</span>
+                            <i class="fa fa-chevron-right"></i>
                         </button>
                     </li>
                 </ul>
