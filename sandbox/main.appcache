@@ -1,0 +1,30 @@
+CACHE MANIFEST
+# 2016-10-14:v0.0.2
+
+# Explicitly cached entries
+index.html
+
+# All other resources (e.g. sites) require the user to be online.
+NETWORK:
+*
+
+# Additional resources to cache
+CACHE:
+https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css
+https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css
+node_modules/osb-manga-reader/lib/OsbMangaReader.js
+node_modules/osb-manga-reader/lib/OsbMangaReader.css
+node_modules/swiper/dist/css/swiper.min.css
+node_modules/drift-zoom/dist/drift-basic.min.css
+node_modules/scrollmagic/scrollmagic/minified/ScrollMagic.min.js
+node_modules/drift-zoom/dist/Drift.min.js
+node_modules/zone.js/dist/zone.js
+node_modules/reflect-metadata/Reflect.js
+node_modules/core-js/client/shim.min.js
+node_modules/systemjs/dist/system.src.js
+node_modules/rxjs/bundles/Rx.umd.js
+node_modules/@angular/core/core.umd.js
+node_modules/@angular/common/common.umd.js
+node_modules/@angular/compiler/compiler.umd.js
+node_modules/@angular/platform-browser/platform-browser.umd.js
+node_modules/@angular/platform-browser-dynamic/platform-browser-dynamic.umd.js
