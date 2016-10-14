@@ -4,6 +4,12 @@ $button-drop-size:  2px;
     outline: none !important;
   }
 
+  .btn {
+    @media (max-width: $breakpoint-x-small) {
+      padding: 6px 10px;
+    }
+  }
+
   .btn-default {
     background-color: $alabaster;
     background-image: none;

@@ -22,8 +22,8 @@
                     </li>
                     <li *ngIf="!isLoading && section === 'manga-chapter'" class="pull-right">
                         <div class="chapterDetails">
-                            <strong>Chapter</strong>: {{viewerSettings.chapter}}/{{viewerSettings.chaptersTotal}}
-                            <strong>Page</strong>: {{viewerSettings.isPage}}/{{viewerSettings.chapterPagesTotal}}
+                            <strong>C<span class="hidden-xs">hapter</span></strong>: {{viewerSettings.chapter}}/{{viewerSettings.chaptersTotal}}
+                            <strong>P<span class="hidden-xs">age</span></strong>: {{viewerSettings.isPage}}/{{viewerSettings.chapterPagesTotal}}
                         </div>
                         <div class="bookmark-nav-holder">
                             <button class="btn btn-primary" title="Previous Bookmark" (click)="goToBookmark(viewerSettings.prevBookmark)" *ngIf="viewerSettings.hasBookmarks && viewerSettings.hasPrevBookmark">
