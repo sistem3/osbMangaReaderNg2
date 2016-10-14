@@ -21,6 +21,8 @@ export class OsbMangaReader implements OnDestroy {
     isLoading = true;
     listStyle = false;
     hideMenu = false;
+    showMessage = false;
+    messageType = '';
 
     mangaDetails = [];
     mangaInfo = {};
@@ -50,7 +52,13 @@ export class OsbMangaReader implements OnDestroy {
         hasPrevBookmark: false,
         nextBookmark: {},
         prevBookmark: {},
-        usingMagnifier: false
+        usingMagnifier: false,
+        isReading: false,
+        wasReading: {
+            manga: {},
+            chapter: 0,
+            page: 0
+        }
     };
     userSettings = {
         nightMode: false,
@@ -69,6 +77,7 @@ export class OsbMangaReader implements OnDestroy {
         this.siteFavouritesUrl = 'http://private-e00abd-osbmangareader.apiary-mock.com/topfeed';
         // Swiper Settings
         this.sliderSettings = {
+            initialSlide: 0,
             slidesPerView: 1,
             keyboardControl: true,
             preloadImages: false,
@@ -92,19 +101,28 @@ export class OsbMangaReader implements OnDestroy {
     }
 
     destroyEvents() {
-        if (mangaView) {
+        if (this.viewerSettings.isReading) {
+            this.viewerSettings.wasReading = {
+                manga: this.viewerSettings.whichManga,
+                chapter: this.viewerSettings.chapter,
+                page: this.viewerSettings.isPage
+            };
+            localStorage.setItem('osbMangaReader.wasReading', JSON.stringify(this.viewerSettings.wasReading));
+        }
+
+        if (mangaView != null) {
             mangaView.destroy();
         }
 
-        if (pageScene) {
+        if (pageScene != null) {
             pageScene.destroy();
         }
 
-        if (pageController) {
+        if (pageController != null) {
             pageController.destroy();
         }
 
-        if (driftInstance) {
+        if (driftInstance != null) {
             driftInstance.destroy();
         }
     }
@@ -143,7 +161,7 @@ export class OsbMangaReader implements OnDestroy {
 
     chapterFinish(swiper) {
         var nextChapter = this.viewerSettings.chapter + 1;
-        this.getMangaChapter(this.viewerSettings.whichManga, nextChapter);
+        this.getMangaChapter(this.viewerSettings.whichManga, nextChapter, false);
     }
 
     checkCache() {
@@ -169,11 +187,24 @@ export class OsbMangaReader implements OnDestroy {
                 this.setNightMode(true);
             }
         }
-        this.getSiteFavourites();
+        var wasReading = localStorage.getItem('osbMangaReader.wasReading');
+        if (wasReading) {
+            this.viewerSettings.wasReading = JSON.parse(wasReading);
+            this.messageType = 'continue';
+            this.showMessage = true;
+            this.getSiteFavourites();
+        } else {
+            this.getSiteFavourites();
+        }
     }
 
-    initSlider() {
+    initSlider(page) {
         var holder = this;
+        if (page) {
+            holder.sliderSettings['initialSlide'] = (page - 1);
+        } else {
+            holder.sliderSettings['initialSlide'] = 0;
+        }
         setTimeout(function(){
             var viewportSize = window.innerHeight - 20;
             document.querySelector('.osb-manga-reader-holder .swiper-container').setAttribute('style','height:' + viewportSize + 'px;');
@@ -305,31 +336,42 @@ export class OsbMangaReader implements OnDestroy {
         }
     }
 
-    getMangaChapter(manga, chapter) {
+    getMangaChapter(manga, chapter, page) {
+        var hasPage = false;
         this.isLoading = true;
+        this.showMessage = false;
         this.viewerSettings.chapter = chapter;
         this.viewerSettings.whichManga = manga;
         this.viewerSettings.mangaTitle = manga.href;
         this.viewerSettings.chaptersTotal = manga.chapters.length;
+        if (page) {
+            hasPage = page;
+        }
         let headers = new Headers({ 'X-Mashape-Authorization': this.apiKey });
         let options = new RequestOptions({ headers: headers });
         this.http.get(this.baseUrl + this.defaultSite  + '/manga/' + manga.href + '/' + chapter, options)
-            .subscribe(response => this.setMangaChapter(response));
+            .subscribe(response => this.setMangaChapter(response, hasPage));
     }
 
-    setMangaChapter(chapter) {
+    setMangaChapter(chapter, page) {
+        var hasPage = false;
         this.hideMenu = true;
         this.viewerSettings.isPage = 1;
         this.viewerSettings.isBookmark = false;
+        this.viewerSettings.isReading = true;
         this.viewerSettings.hasBookmarks = this.hasBookmarks(this.viewerSettings.mangaTitle);
         this.mangaChapter = chapter.json();
         this.section = 'manga-chapter';
         this.isLoading = false;
-        this.initSlider();
+        if (page) {
+            hasPage = page;
+        }
+        this.initSlider(hasPage);
     }
 
     getMainMangaList() {
         var holder = this;
+        this.viewerSettings.isReading = false;
         if (this.mainListViewData.length > 1) {
             var mainViewData = this.mainListViewData.slice(0, 20);
             mainViewData.forEach(function(element) {
@@ -450,6 +492,7 @@ export class OsbMangaReader implements OnDestroy {
 
     getSiteFavourites() {
         var holder = this;
+        this.viewerSettings.isReading = false;
         this.siteFavouritesDisplay = [];
         if (this.siteFavouritesData.length > 1) {
             this.siteFavouritesData.forEach(function(element) {

@@ -4,6 +4,21 @@ $button-drop-size:  2px;
     outline: none !important;
   }
 
+  .btn-default {
+    background-color: $alabaster;
+    background-image: none;
+    border: 0;
+
+    &:hover {
+      background-color: $silver-chalice;
+    }
+
+    &:active, &.active {
+      margin-bottom: -$button-drop-size;
+      margin-top: $button-drop-size;
+    }
+  }
+
   .btn-primary {
     background-color: $azure-radiance;
     background-image: none;
