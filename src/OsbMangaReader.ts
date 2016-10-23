@@ -138,7 +138,7 @@ export class OsbMangaReader implements OnDestroy {
         if (this.viewerSettings.isReading) {
             this.viewerSettings.wasReading = {
                 manga: this.viewerSettings.whichManga,
-                chapter: this.viewerSettings.chapter,
+                chapter: this.viewerSettings.chapterPosition,
                 page: this.viewerSettings.isPage
             };
             localStorage.setItem('osbMangaReader.wasReading', JSON.stringify(this.viewerSettings.wasReading));
@@ -339,6 +339,10 @@ export class OsbMangaReader implements OnDestroy {
             this.userSettings.favourites.push(manga.href);
             localStorage.setItem('osbMangaReader.user', JSON.stringify(this.userSettings));
         }
+    }
+
+    parseChapter(chapterNum) {
+        return parseInt(chapterNum);
     }
 
     getMangaChapter(manga, chapter, page) {
