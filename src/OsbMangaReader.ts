@@ -344,7 +344,7 @@ export class OsbMangaReader implements OnDestroy {
         var hasPage = false;
         this.isLoading = true;
         this.showMessage = false;
-        this.viewerSettings.chapter = chapter;
+        this.viewerSettings.chapter = manga.chapters[chapter].chapterId;
         this.viewerSettings.whichManga = manga;
         this.viewerSettings.mangaTitle = manga.href;
         this.viewerSettings.chaptersTotal = manga.chapters.length;
@@ -354,7 +354,7 @@ export class OsbMangaReader implements OnDestroy {
         }
         let headers = new Headers({ 'X-Mashape-Authorization': this.apiKey });
         let options = new RequestOptions({ headers: headers });
-        this.http.get(this.baseUrl + this.defaultSite  + '/manga/' + manga.href + '/' + chapter, options)
+        this.http.get(this.baseUrl + this.defaultSite  + '/manga/' + manga.href + '/' + this.viewerSettings.chapter, options)
             .subscribe(response => this.setMangaChapter(response, hasPage));
     }
 
