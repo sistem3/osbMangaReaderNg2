@@ -43,6 +43,7 @@ export class OsbMangaReader implements OnDestroy {
         whichManga: {},
         mangaTitle: '',
         chapter: 1,
+        chapterPosition: 0,
         chaptersTotal: 0,
         chapterPagesTotal: 0,
         isPage: 1,
@@ -344,6 +345,7 @@ export class OsbMangaReader implements OnDestroy {
         var hasPage = false;
         this.isLoading = true;
         this.showMessage = false;
+        this.viewerSettings.chapterPosition = chapter;
         this.viewerSettings.chapter = manga.chapters[chapter].chapterId;
         this.viewerSettings.whichManga = manga;
         this.viewerSettings.mangaTitle = manga.href;

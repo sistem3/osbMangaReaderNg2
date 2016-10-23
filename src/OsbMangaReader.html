@@ -39,11 +39,11 @@
                         <button class="btn btn-primary" title="Show Magnifier" (click)="showMagnifier()">
                             <i class="fa" [ngClass]="{'fa-eye': viewerSettings.usingMagnifier, 'fa-eye-slash': !viewerSettings.usingMagnifier}"></i>
                         </button>
-                        <button *ngIf="viewerSettings.prevChapterShow" (click)="getMangaChapter(viewerSettings.whichManga, (viewerSettings.chapter - 2), false)" class="chapterOverlay chapterPrev">
+                        <button *ngIf="viewerSettings.prevChapterShow" (click)="getMangaChapter(viewerSettings.whichManga, (viewerSettings.chapterPosition - 1), false)" class="chapterOverlay chapterPrev">
                             <i class="fa fa-chevron-left"></i>
                             <span>Prev Chapter</span>
                         </button>
-                        <button *ngIf="viewerSettings.nextChapterShow" (click)="getMangaChapter(viewerSettings.whichManga, viewerSettings.chapter, false)" class="chapterOverlay chapterNext">
+                        <button *ngIf="viewerSettings.nextChapterShow" (click)="getMangaChapter(viewerSettings.whichManga, (viewerSettings.chapterPosition + 1), false)" class="chapterOverlay chapterNext">
                             <span>Next Chapter</span>
                             <i class="fa fa-chevron-right"></i>
                         </button>
@@ -152,7 +152,7 @@
                 <nav class="form-inline">
                     <label for="chapterSelect">Chapter: </label>
                     <select id="chapterSelect" class="form-control" [(ngModel)]="mangaInfo.chapterSelect">
-                        <option *ngFor="let chapter of mangaInfo.chapters" [value]="chapter.chapterId">{{ chapter.chapterId }} | {{ chapter.name }}</option>
+                        <option *ngFor="let chapter of mangaInfo.chapters; let i = index" [value]="i">{{ chapter.chapterId }} | {{ chapter.name }}</option>
                     </select>
                     <button class="btn btn-primary" (click)="getMangaChapter(mangaInfo, mangaInfo.chapterSelect)"><i class="fa fa-chevron-right"></i></button>
                 </nav>
