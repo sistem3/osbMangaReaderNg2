@@ -22,8 +22,8 @@
                     </li>
                     <li *ngIf="!isLoading && section === 'manga-chapter'" class="pull-right">
                         <div class="chapterDetails">
-                            <strong>Chapter</strong>: {{viewerSettings.chapter}}/{{viewerSettings.chaptersTotal}}
-                            <strong>Page</strong>: {{viewerSettings.isPage}}/{{viewerSettings.chapterPagesTotal}}
+                            <strong>C<span class="hidden-xs">hapter</span></strong>: {{viewerSettings.chapter}}/{{viewerSettings.chaptersTotal}}
+                            <strong>P<span class="hidden-xs">age</span></strong>: {{viewerSettings.isPage}}/{{viewerSettings.chapterPagesTotal}}
                         </div>
                         <div class="bookmark-nav-holder">
                             <button class="btn btn-primary" title="Previous Bookmark" (click)="goToBookmark(viewerSettings.prevBookmark)" *ngIf="viewerSettings.hasBookmarks && viewerSettings.hasPrevBookmark">
@@ -38,6 +38,14 @@
                         </div>
                         <button class="btn btn-primary" title="Show Magnifier" (click)="showMagnifier()">
                             <i class="fa" [ngClass]="{'fa-eye': viewerSettings.usingMagnifier, 'fa-eye-slash': !viewerSettings.usingMagnifier}"></i>
+                        </button>
+                        <button *ngIf="viewerSettings.prevChapterShow" (click)="getMangaChapter(viewerSettings.whichManga, (parseChapter(viewerSettings.chapterPosition) - 1), false)" class="chapterOverlay chapterPrev">
+                            <i class="fa fa-chevron-left"></i>
+                            <span>Prev Chapter</span>
+                        </button>
+                        <button *ngIf="viewerSettings.nextChapterShow" (click)="getMangaChapter(viewerSettings.whichManga, (parseChapter(viewerSettings.chapterPosition) + 1), false)" class="chapterOverlay chapterNext">
+                            <span>Next Chapter</span>
+                            <i class="fa fa-chevron-right"></i>
                         </button>
                     </li>
                 </ul>
@@ -60,7 +68,7 @@
                             <button class="btn btn-primary" (click)="setFavourite(manga)">
                                 <i class="fa" [ngClass]="{'fa-heart': !checkFavourite(manga.href), 'fa-heart-o': checkFavourite(manga.href)}"></i> Add to favourites
                             </button>
-                            <button class="btn btn-primary" (click)="getMangaChapter(manga, 1)">
+                            <button class="btn btn-primary" (click)="getMangaChapter(manga, 0, false)">
                                 <i class="fa fa-book"></i> Start Reading
                             </button>
                         </nav>
@@ -77,7 +85,7 @@
                     <button class="btn btn-primary" (click)="setFavourite(manga)">
                         <i class="fa" [ngClass]="{'fa-heart': !checkFavourite(manga.href), 'fa-heart-o': checkFavourite(manga.href)}"></i>
                     </button>
-                    <button class="btn btn-primary" (click)="getMangaChapter(manga, 1)">
+                    <button class="btn btn-primary" (click)="getMangaChapter(manga, 0, false)">
                         <i class="fa fa-book"></i>
                     </button>
                 </nav>
@@ -102,7 +110,7 @@
                             <button class="btn btn-primary" (click)="setFavourite(manga)">
                                 <i class="fa" [ngClass]="{'fa-heart': !checkFavourite(manga.href), 'fa-heart-o': checkFavourite(manga.href)}"></i> Add to favourites
                             </button>
-                            <button class="btn btn-primary" (click)="getMangaChapter(manga.href, 1)">
+                            <button class="btn btn-primary" (click)="getMangaChapter(manga.href, 0, false)">
                                 <i class="fa fa-book"></i> Start Reading
                             </button>
                         </nav>
@@ -122,7 +130,7 @@
                     <button class="btn btn-primary" (click)="setFavourite(manga)">
                         <i class="fa" [ngClass]="{'fa-heart': !checkFavourite(manga.href), 'fa-heart-o': checkFavourite(manga.href)}"></i>
                     </button>
-                    <button class="btn btn-primary" (click)="getMangaChapter(manga.href, 1)">
+                    <button class="btn btn-primary" (click)="getMangaChapter(manga.href, 0, false)">
                         <i class="fa fa-book"></i>
                     </button>
                 </nav>
@@ -144,7 +152,7 @@
                 <nav class="form-inline">
                     <label for="chapterSelect">Chapter: </label>
                     <select id="chapterSelect" class="form-control" [(ngModel)]="mangaInfo.chapterSelect">
-                        <option *ngFor="let chapter of mangaInfo.chapters" [value]="chapter.chapterId">{{ chapter.chapterId }} | {{ chapter.name }}</option>
+                        <option *ngFor="let chapter of mangaInfo.chapters; let i = index" [value]="i">{{ i }} | {{ chapter.name }}</option>
                     </select>
                     <button class="btn btn-primary" (click)="getMangaChapter(mangaInfo, mangaInfo.chapterSelect)"><i class="fa fa-chevron-right"></i></button>
                 </nav>
@@ -179,6 +187,15 @@
             </div>
         </div>
         <div id="imageMagnifier"></div>
+    </section>
+    <section *ngIf="showMessage" class="osb-lightbox">
+        <article class="message-holder">
+            <div *ngIf="messageType == 'continue'">
+                <p>Continue Reading?</p>
+                <button (click)="getMangaChapter(viewerSettings.wasReading.manga, viewerSettings.wasReading.chapter, viewerSettings.wasReading.page)" class="btn btn-primary left">Yes</button>
+                <button (click)="showMessage = false" class="btn btn-default right">No</button>
+            </div>
+        </article>
     </section>
     <section *ngIf="isLoading" class="mangaLoader">
         <i class="fa fa-spinner fa-spin"></i>

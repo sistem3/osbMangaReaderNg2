@@ -12,6 +12,8 @@ export declare class OsbMangaReader implements OnDestroy {
     isLoading: boolean;
     listStyle: boolean;
     hideMenu: boolean;
+    showMessage: boolean;
+    messageType: string;
     mangaDetails: any[];
     mangaInfo: {};
     mangaChapter: {};
@@ -28,6 +30,7 @@ export declare class OsbMangaReader implements OnDestroy {
         whichManga: {};
         mangaTitle: string;
         chapter: number;
+        chapterPosition: number;
         chaptersTotal: number;
         chapterPagesTotal: number;
         isPage: number;
@@ -38,6 +41,14 @@ export declare class OsbMangaReader implements OnDestroy {
         nextBookmark: {};
         prevBookmark: {};
         usingMagnifier: boolean;
+        isReading: boolean;
+        prevChapterShow: boolean;
+        nextChapterShow: boolean;
+        wasReading: {
+            manga: {};
+            chapter: number;
+            page: number;
+        };
     };
     userSettings: {
         nightMode: boolean;
@@ -48,11 +59,11 @@ export declare class OsbMangaReader implements OnDestroy {
     ngOnDestroy(): void;
     destroyEvents(): void;
     sliderOnInit(swiper: any): void;
+    setIsReading(): void;
     slideChangeStarting(swiper: any): void;
     slideChanged(swiper: any): void;
-    chapterFinish(swiper: any): void;
     checkCache(): void;
-    initSlider(): void;
+    initSlider(page: any): void;
     setNightMode(isNight: any): void;
     toggleNightMode(): void;
     showMagnifier(): void;
@@ -64,8 +75,9 @@ export declare class OsbMangaReader implements OnDestroy {
     setBookmark(manga: any, chapter: any, page: any): void;
     checkFavourite(manga: any): boolean;
     setFavourite(manga: any): void;
-    getMangaChapter(manga: any, chapter: any): void;
-    setMangaChapter(chapter: any): void;
+    parseChapter(chapterNum: any): number;
+    getMangaChapter(manga: any, chapter: any, page: any): void;
+    setMangaChapter(chapter: any, page: any): void;
     getMainMangaList(): boolean;
     viewMangaDetails(manga: any): void;
     setMainMangaList(data: any): void;
