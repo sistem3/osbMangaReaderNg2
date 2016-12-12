@@ -56,7 +56,7 @@
         <ul *ngIf="listStyle" class="list-unstyled listGrid">
             <li *ngFor="let manga of siteFavouritesDisplay" class="mangaTitle">
                 <article class="container-fluid">
-                    <div class="col-md-2 col-sm-4 col-xs-12 mainImage"><img src="{{ manga.cover }}" alt="{{ manga.name }}" title="{{ manga.name }}" class="img-responsive center-block" /></div>
+                    <div class="col-md-2 col-sm-4 col-xs-12 mainImage"><img [src]="manga.cover" alt="{{ manga.name }}" title="{{ manga.name }}" class="img-responsive center-block" /></div>
                     <div class="col-md-10 col-sm-8 col-xs-12">
                         <h2>{{ manga.name }}</h2>
                         <p [innerHTML]="manga.info"></p>
@@ -89,7 +89,7 @@
                         <i class="fa fa-book"></i>
                     </button>
                 </nav>
-                <img src="{{ manga.cover }}" alt="{{ manga.name }}" title="{{ manga.name }}" />
+                <img [src]="manga.cover" alt="{{ manga.name }}" title="{{ manga.name }}" />
                 <div class="title">{{ manga.name }}</div>
             </li>
         </ul>
@@ -98,7 +98,7 @@
         <ul *ngIf="listStyle" class="list-unstyled listGrid">
             <li *ngFor="let manga of mainListViewDisplay" class="mangaTitle">
                 <article class="container-fluid">
-                    <div class="col-md-2 col-sm-4 col-xs-12 mainImage"><img src="{{ manga.cover }}" alt="{{ manga.name }}" title="{{ manga.name }}" class="img-responsive center-block" /></div>
+                    <div class="col-md-2 col-sm-4 col-xs-12 mainImage"><img [src]="manga.cover" alt="{{ manga.name }}" title="{{ manga.name }}" class="img-responsive center-block" /></div>
                     <div class="col-md-10 col-sm-8 col-xs-12">
                         <h2>{{ manga.name }}</h2>
                         <p [innerHTML]="manga.info"></p>
@@ -134,7 +134,7 @@
                         <i class="fa fa-book"></i>
                     </button>
                 </nav>
-                <img src="{{ manga.cover }}" alt="{{ manga.name }}" title="{{ manga.name }}" />
+                <img [src]="manga.cover" alt="{{ manga.name }}" title="{{ manga.name }}" />
                 <div class="title">{{ manga.name }}</div>
             </li>
             <li id="paginationLoader">
@@ -145,7 +145,7 @@
     <section *ngIf="!isLoading && section === 'manga-info'" class="mangaTitle mangaDetails container-fluid">
         <article class="row">
             <div class="col-md-3 col-sm-3 col-xs-12 mainImage">
-                <img src="{{ mangaInfo.cover }}" class="img-responsive center-block" />
+                <img [src]="mangaInfo.cover" class="img-responsive center-block" />
             </div>
             <div class="col-md-9 col-sm-9 col-xs-12">
                 <h2 [innerHTML]="mangaInfo.name"></h2>
@@ -183,7 +183,7 @@
     <section *ngIf="!isLoading && section === 'manga-chapter'" class="mangaViewer swiper-container">
         <div class="swiper-wrapper">
             <div *ngFor="let page of mangaChapter.pages" class="swiper-slide mangaPage">
-                <img src="{{ page.url }}" class="manga-page-iamge" [attr.data-zoom]="page.url" />
+                <img [src]="page.url" class="manga-page-iamge" [attr.data-zoom]="page.url" />
             </div>
         </div>
         <div id="imageMagnifier"></div>
