@@ -29,6 +29,7 @@ export declare class OsbMangaReader implements OnDestroy {
     viewerSettings: {
         whichManga: {};
         mangaTitle: string;
+        showMenu: boolean;
         chapter: number;
         chapterPosition: number;
         chaptersTotal: number;
@@ -66,6 +67,7 @@ export declare class OsbMangaReader implements OnDestroy {
     initSlider(page: any): void;
     setNightMode(isNight: any): void;
     toggleNightMode(): void;
+    toggleMenu(): void;
     showMagnifier(): void;
     hasMoreBookmarks(pageObj: any): boolean;
     hasLessBookmarks(pageObj: any): boolean;
