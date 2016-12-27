@@ -78,7 +78,7 @@ export class OsbMangaReader implements OnDestroy {
         this.apiKey = 'xiQSdA9ACbmshUxnm4ZBC8nn2umSp1LeqQfjsnnVeMWHHSIQy0';
         this.defaultSite = 'mangareader.net';
         // App Favourites Settings
-        this.siteFavouritesUrl = 'http://private-e00abd-osbmangareader.apiary-mock.com/topfeed';
+        this.siteFavouritesUrl = 'https://private-e00abd-osbmangareader.apiary-mock.com/topfeed';
         // Swiper Settings
         this.sliderSettings = {
             initialSlide: 0,
