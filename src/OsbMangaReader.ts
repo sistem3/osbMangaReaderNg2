@@ -92,7 +92,7 @@ export class OsbMangaReader implements OnDestroy {
         console.log(this);
         this.checkCache();
 
-        var holder = this;
+        let holder = this;
         window.onbeforeunload = function(e) {
             holder.destroyEvents();
         };
@@ -123,7 +123,7 @@ export class OsbMangaReader implements OnDestroy {
     }
 
     sliderOnInit(swiper) {
-        var pageObj = {
+        let pageObj = {
             manga: this.viewerSettings.mangaTitle,
             chapter: this.viewerSettings.chapter,
             page: this.viewerSettings.isPage
@@ -153,7 +153,7 @@ export class OsbMangaReader implements OnDestroy {
 
     slideChanged(swiper) {
         this.viewerSettings.isPage = swiper.activeIndex + 1;
-        var pageObj = {
+        let pageObj = {
             manga: this.viewerSettings.mangaTitle,
             chapter: this.viewerSettings.chapter,
             page: this.viewerSettings.isPage
@@ -170,29 +170,29 @@ export class OsbMangaReader implements OnDestroy {
     }
 
     checkCache() {
-        var mainListData = localStorage.getItem('osbMangaReader.mainList');
+        let mainListData = localStorage.getItem('osbMangaReader.mainList');
         if (mainListData) {
             this.mainListViewData = JSON.parse(mainListData);
         }
 
-        var siteFavourites = localStorage.getItem('osbMangaReader.siteFavourites');
+        let siteFavourites = localStorage.getItem('osbMangaReader.siteFavourites');
         if (siteFavourites) {
             this.siteFavouritesData = JSON.parse(siteFavourites);
         }
 
-        var mangaDetails = localStorage.getItem('osbMangaReader.mangaDetails');
+        let mangaDetails = localStorage.getItem('osbMangaReader.mangaDetails');
         if (mangaDetails) {
             this.mangaDetails = JSON.parse(mangaDetails);
         }
 
-        var userSettings = localStorage.getItem('osbMangaReader.user');
+        let userSettings = localStorage.getItem('osbMangaReader.user');
         if (userSettings) {
             this.userSettings = JSON.parse(userSettings);
             if (this.userSettings.nightMode) {
                 this.setNightMode(true);
             }
         }
-        var wasReading = localStorage.getItem('osbMangaReader.wasReading');
+        let wasReading = localStorage.getItem('osbMangaReader.wasReading');
         if (wasReading) {
             this.viewerSettings.wasReading = JSON.parse(wasReading);
             this.messageType = 'continue';
@@ -204,15 +204,14 @@ export class OsbMangaReader implements OnDestroy {
     }
 
     initSlider(page) {
-        var holder = this;
+        let holder = this;
         if (page) {
             holder.sliderSettings['initialSlide'] = (page - 1);
         } else {
             holder.sliderSettings['initialSlide'] = 0;
         }
         setTimeout(function(){
-            var viewportSize = window.innerHeight - 20;
-            document.querySelector('.osb-manga-reader-holder .swiper-container').setAttribute('style','height:' + viewportSize + 'px;');
+            document.querySelector('.osb-manga-reader-holder .swiper-container').setAttribute('style','height:' + window.innerHeight + 'px;');
             mangaView = new Swiper(document.querySelector('.osb-manga-reader-holder .swiper-container'), holder.sliderSettings);
         }, 500);
     }
@@ -243,7 +242,7 @@ export class OsbMangaReader implements OnDestroy {
     }
 
     hasMoreBookmarks(pageObj) {
-        var holder = this, match = false, firstMatch = false;
+        let holder = this, match = false, firstMatch = false;
         this.userSettings.bookmarks.forEach(function(el) {
             if (pageObj.manga === el.manga &&
                 pageObj.chapter == el.chapter &&
@@ -264,7 +263,7 @@ export class OsbMangaReader implements OnDestroy {
     }
 
     hasLessBookmarks(pageObj) {
-        var holder = this, match = false;
+        let holder = this, match = false;
         this.userSettings.bookmarks.forEach(function(el) {
             if (pageObj.manga === el.manga &&
                 pageObj.chapter == el.chapter &&
@@ -283,7 +282,7 @@ export class OsbMangaReader implements OnDestroy {
     }
 
     hasBookmarks(manga) {
-        var match = false;
+        let match = false;
         this.userSettings.bookmarks.forEach(function(el){
             if (manga === el.manga) {
                 match = true;
@@ -294,8 +293,8 @@ export class OsbMangaReader implements OnDestroy {
     }
 
     checkBookmark(bookmark) {
-        var jsonMatcher = JSON.stringify(bookmark);
-        var match = false;
+        let jsonMatcher = JSON.stringify(bookmark);
+        let match = false;
         this.userSettings.bookmarks.forEach(function(el) {
             if (JSON.stringify(el) === jsonMatcher) {
                 match = true;
@@ -306,7 +305,7 @@ export class OsbMangaReader implements OnDestroy {
     }
 
     setBookmark(manga, chapter, page) {
-        var bookmark = {
+        let bookmark = {
             manga: manga.href,
             chapter: chapter,
             page: page
@@ -346,7 +345,7 @@ export class OsbMangaReader implements OnDestroy {
     }
 
     getMangaChapter(manga, chapter, page) {
-        var hasPage = false;
+        let hasPage = false;
         this.isLoading = true;
         this.showMessage = false;
         this.viewerSettings.chapterPosition = chapter;
@@ -365,7 +364,7 @@ export class OsbMangaReader implements OnDestroy {
     }
 
     setMangaChapter(chapter, page) {
-        var hasPage = false;
+        let hasPage = false;
         this.hideMenu = true;
         this.viewerSettings.isPage = 1;
         this.viewerSettings.isBookmark = false;
@@ -381,10 +380,10 @@ export class OsbMangaReader implements OnDestroy {
     }
 
     getMainMangaList() {
-        var holder = this;
+        let holder = this;
         this.viewerSettings.isReading = false;
         if (this.mainListViewData.length > 1) {
-            var mainViewData = this.mainListViewData.slice(0, 20);
+            let mainViewData = this.mainListViewData.slice(0, 20);
             mainViewData.forEach(function(element) {
                 holder.getMangaDetails(element, 'main-view', false);
                 setTimeout(function () {
@@ -405,11 +404,11 @@ export class OsbMangaReader implements OnDestroy {
     }
 
     setMainMangaList(data) {
-        var holder = this;
+        let holder = this;
         this.mainListViewData = data.json();
         localStorage.setItem('osbMangaReader.mainList', JSON.stringify(this.mainListViewData));
 
-        var mainViewData = this.mainListViewData.slice(0, 20);
+        let mainViewData = this.mainListViewData.slice(0, 20);
         mainViewData.forEach(function(element) {
             holder.getMangaDetails(element, 'main-view', false);
         });
@@ -420,16 +419,16 @@ export class OsbMangaReader implements OnDestroy {
     }
 
     getMoreMainManga() {
-        var holder = this;
-        var current = holder.mainListViewDisplayPage;
+        let holder = this;
+        let current = holder.mainListViewDisplayPage;
         holder.mainListViewDisplayPage++;
-        var mainViewData = this.mainListViewData.slice((holder.mainListViewDisplayPageLength * current), (holder.mainListViewDisplayPageLength * holder.mainListViewDisplayPage));
+        let mainViewData = this.mainListViewData.slice((holder.mainListViewDisplayPageLength * current), (holder.mainListViewDisplayPageLength * holder.mainListViewDisplayPage));
         mainViewData.forEach(function(element) {
             holder.getMangaDetails(element, 'main-view', false);
         });
 
         setTimeout(function () {
-            var paginationType;
+            let paginationType;
             if (holder.listStyle) {
                 paginationType = '#paginationLoaderList';
             } else {
@@ -440,7 +439,7 @@ export class OsbMangaReader implements OnDestroy {
     }
 
     startPagination() {
-        var holder = this, paginationType = '';
+        let holder = this, paginationType = '';
         pageController = new ScrollMagic.Controller();
         if (holder.listStyle) {
             paginationType = '#paginationLoaderList';
@@ -461,7 +460,7 @@ export class OsbMangaReader implements OnDestroy {
     }
 
     getMangaDetails(manga, section, cache) {
-        var holder = this;
+        let holder = this;
         if (this.mangaDetails.length > 1 && cache) {
             this.mangaDetails.forEach(function(element) {
                 if (manga.title === element.name) {
@@ -482,7 +481,7 @@ export class OsbMangaReader implements OnDestroy {
     }
 
     setMangaDetails(manga, section, cache) {
-        var data = manga.json();
+        let data = manga.json();
         if (cache) {
             this.mangaDetails.push(data);
             localStorage.setItem('osbMangaReader.mangaDetails', JSON.stringify(this.mangaDetails));
@@ -502,7 +501,7 @@ export class OsbMangaReader implements OnDestroy {
     }
 
     getSiteFavourites() {
-        var holder = this;
+        let holder = this;
         this.viewerSettings.isReading = false;
         this.siteFavouritesDisplay = [];
         if (this.siteFavouritesData.length > 1) {
@@ -517,7 +516,7 @@ export class OsbMangaReader implements OnDestroy {
     }
 
     setSiteFavourites(data) {
-        var holder = this;
+        let holder = this;
         this.siteFavouritesData = data.json();
         localStorage.setItem('osbMangaReader.siteFavourites', JSON.stringify(this.siteFavouritesData));
         this.siteFavouritesData.forEach(function(element) {
