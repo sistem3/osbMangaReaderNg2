@@ -3,14 +3,16 @@
     width: 100%;
     background: rgba($color-white, 0.5);
     border-bottom: 1px solid $color-black;
+    margin-top: 0;
     position: fixed;
     top: 0;
     left: 0;
     z-index: 999;
+    -webkit-transition: margin-top .5s;
+    transition: margin-top .5s;
     
     &.hideMenu {
-      height: 0;
-      overflow: hidden;
+      margin-top: -55px;
 
       .nav-toggle-button {
         top: 10px;
@@ -22,6 +24,9 @@
       top: 60px;
       left: 10px;
       opacity: 0.5;
+      z-index: 9999;
+      -webkit-transition: top .5s;
+      transition: top .5s;
 
       &:hover {
         opacity: 1;
