@@ -42,6 +42,7 @@ export class OsbMangaReader implements OnDestroy {
     viewerSettings = {
         whichManga: {},
         mangaTitle: '',
+        showMenu: true,
         chapter: 1,
         chapterPosition: 0,
         chaptersTotal: 0,
@@ -230,6 +231,10 @@ export class OsbMangaReader implements OnDestroy {
         localStorage.setItem('osbMangaReader.user', JSON.stringify(this.userSettings));
     }
 
+    toggleMenu() {
+        this.viewerSettings.showMenu = !this.viewerSettings.showMenu;
+    }
+
     showMagnifier() {
         this.viewerSettings.usingMagnifier = !this.viewerSettings.usingMagnifier;
         if (this.viewerSettings.usingMagnifier) {
@@ -369,6 +374,7 @@ export class OsbMangaReader implements OnDestroy {
         this.viewerSettings.isPage = 1;
         this.viewerSettings.isBookmark = false;
         this.viewerSettings.isReading = true;
+        this.viewerSettings.showMenu = false;
         this.viewerSettings.hasBookmarks = this.hasBookmarks(this.viewerSettings.mangaTitle);
         this.mangaChapter = chapter.json();
         this.section = 'manga-chapter';
