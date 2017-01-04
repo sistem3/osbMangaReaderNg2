@@ -11,6 +11,7 @@ NETWORK:
 # Additional resources to cache
 CACHE:
 index.html
+/build/Sandbox.js
 https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css
 https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css
 node_modules/osb-manga-reader/lib/OsbMangaReader.js
