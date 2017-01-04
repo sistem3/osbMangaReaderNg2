@@ -40,7 +40,7 @@
                         </div>
                     </li>
 
-                    <li *ngIf="!isLoading && section === 'manga-chapter' && hideMenu" class="pull-right">
+                    <li *ngIf="!isLoading && section === 'manga-chapter' && hideMenu" class="pull-right hidden-xs">
                         <div class="bookmark-nav-holder">
                             <button class="btn btn-primary" title="Show Magnifier" (click)="showMagnifier()">
                                 <i class="fa" [ngClass]="{'fa-eye': viewerSettings.usingMagnifier, 'fa-eye-slash': !viewerSettings.usingMagnifier}"></i>
