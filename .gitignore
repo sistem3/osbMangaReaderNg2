@@ -6,3 +6,7 @@ build
 
 examples
 sandbox/node_modules/
+sandbox/.firebaserc
+sandbox/404.html
+sandbox/firebase.json
+sandbox/database.rules.json
