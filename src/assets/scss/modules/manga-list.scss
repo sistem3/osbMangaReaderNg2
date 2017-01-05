@@ -89,6 +89,16 @@
 
     .listGrid {
       padding-top: 20px;
+
+      @media (max-width: $breakpoint-x-small) {
+        article h2 {
+          font-size: 21px;
+        }
+      }
+
+      p {
+        width: 80%;
+      }
     }
   }
 
