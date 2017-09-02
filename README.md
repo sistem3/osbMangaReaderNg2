@@ -3,6 +3,8 @@ Progressive Web App for reading Manga, powered by [MangaScraper API](https://mar
 
 ## Version: 0.0.4
 
+## Note: This project will no longer be developed, focus will be on the Angular CLI version
+
 ## Demo: [Click Here](https://osbmangareader.firebaseapp.com/)
 
 ## Dependencies:
@@ -12,5 +14,3 @@ Progressive Web App for reading Manga, powered by [MangaScraper API](https://mar
 * [iDangerous Swiper](http://idangero.us/swiper/)
 * [ScrollMagic](http://scrollmagic.io/)
 * [DriftZoom](https://imgix.github.io/drift/)
-
-_Please note this project is still in an early testing phase_
